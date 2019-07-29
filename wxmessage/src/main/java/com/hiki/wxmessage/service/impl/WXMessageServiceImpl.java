@@ -1,7 +1,6 @@
 package com.hiki.wxmessage.service.impl;
 
 
-import ch.qos.logback.core.util.TimeUtil;
 import com.hiki.wxmessage.entity.InMessageEntity;
 import com.hiki.wxmessage.entity.OutMessageEntity;
 import com.hiki.wxmessage.service.WXMessageService;
@@ -41,18 +40,18 @@ public class WXMessageServiceImpl implements WXMessageService {
             response = WeatherUtil.getWeather("");
         }else {
             Matcher m = MatcheUtil.matchesGroup(".*\\s*天气.*",msg);
-            if( m.find() ){
+            if( m.find() ) {
                 String[] ms = m.group(0).split("天气");
                 String city = ms[0].trim();
 
-                if( !redisTemplate.hasKey("WEATHER_" + city) ){
+                if (!redisTemplate.hasKey("WEATHER_" + city)) {
                     redisTemplate.opsForValue().set("WEATHER_" + city, WeatherUtil.getWeather(city), 3600000, TimeUnit.MILLISECONDS);
                 }
 
-                if( !redisTemplate.hasKey("WEATHER_" + city) ){
-                   throw new RuntimeException("redis写入失败啦！");
+                if (!redisTemplate.hasKey("WEATHER_" + city)) {
+                    throw new RuntimeException("redis写入失败啦！");
                 }
-                response =redisTemplate.opsForValue().get("WEATHER_" + city).toString();
+                response = redisTemplate.opsForValue().get("WEATHER_" + city).toString();
             }
         }
 
