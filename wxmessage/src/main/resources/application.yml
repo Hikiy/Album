@@ -24,3 +24,9 @@ eureka:
       defaultZone: http://localhost:8001/eureka/
   instance:
     hostname: util
+OSS:
+  endpoint: "oss-cn-shenzhen.aliyuncs.com"
+  accessKeyId: "LTAIIGGHIFfX6zGF"
+  accessKeySecret: "KDWqN5o4rQQKIsRlzykxSX7Htsw54t"
+  bucketName: "hiki-blog"
+

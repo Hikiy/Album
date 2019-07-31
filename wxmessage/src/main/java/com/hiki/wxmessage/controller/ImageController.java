@@ -17,11 +17,11 @@ import java.io.*;
 public class ImageController {
     @Autowired
     private OSSService ossService;
-    @PostMapping(value = "/showimagebylocal", produces = "image/jpeg")
+    @GetMapping(value = "/showimagebylocal", produces = "image/jpeg")
     @ResponseBody
     public byte[] showImageByLocal(HttpServletRequest request){
 //        String name = request.getParameter("name");
-//        String filename = request.getParameter("filename");
+        String filename = request.getParameter("filename");
 //        System.out.println(name);
 //        System.out.println(filename);
 //
@@ -30,14 +30,14 @@ public class ImageController {
 //        }
 
         byte[] bytes = null;
-//        try {
-//            File file = new File("E:/" + filename);
-//            FileInputStream inputStream = new FileInputStream(file);
-//            bytes = new byte[inputStream.available()];
-//            inputStream.read(bytes, 0, inputStream.available());
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
+        try {
+            File file = new File("E:/" + filename);
+            FileInputStream inputStream = new FileInputStream(file);
+            bytes = new byte[inputStream.available()];
+            inputStream.read(bytes, 0, inputStream.available());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         return bytes;
     }
 
@@ -50,21 +50,17 @@ public class ImageController {
     @ResponseBody
     public byte[] showImage(HttpServletRequest request){
         String filename = request.getParameter("filename");
-
         if( filename.isEmpty()){
             return null;
         }
-
         byte[] bytes = null;
-        try {
-            InputStream inputStream= ossService.getFileStream(filename);
-//            File file = new File("E:/" + filename);
-//            FileInputStream inputStream = new FileInputStream(file);
-//            inputStream.read(bytes, 0, inputStream.available());
-            bytes = new byte[inputStream.available()];
-        } catch (IOException ex) {
-            ex.printStackTrace();
+
+        try{
+            bytes = ossService.getFileByte(filename);
+        }catch (IOException e){
+
         }
+
         return bytes;
     }
 }

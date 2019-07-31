@@ -2,6 +2,7 @@ package com.hiki.wxmessage.service;
 
 import com.aliyun.oss.OSS;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -10,5 +11,5 @@ import java.io.InputStream;
  */
 public interface OSSService {
     public InputStream getFileStream(String filename);
-    public OSS getOSSClient();
+    public byte[] getFileByte(String filename)throws IOException;
 }
