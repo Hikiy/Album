@@ -3,14 +3,12 @@ package com.hiki.wxmessage.controller;
 import com.hiki.wxmessage.service.OSSService;
 import com.hiki.wxmessage.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

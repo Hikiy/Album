@@ -1,6 +1,5 @@
 server:
   port: 8011
-
 spring:
   application:
     name: util
@@ -18,6 +17,12 @@ spring:
   cache:
     redis:
       key-prefix: "HIKI_WX:"
+  mvc:
+    view:
+      prefix: classpath:/templates/
+      suffix: html
+  thymeleaf:
+    cache: false
 eureka:
   client:
     service-url:
