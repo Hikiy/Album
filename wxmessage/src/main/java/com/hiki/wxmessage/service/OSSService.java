@@ -1,15 +1,15 @@
 package com.hiki.wxmessage.service;
 
-import com.aliyun.oss.OSS;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Map;
 
 /**
  * @author ：hiki
  * 2019/7/29 14:36
  */
 public interface OSSService {
-    public InputStream getFileStream(String filename);
     public byte[] getFileByte(String filename)throws IOException;
+    public Map<String, String> uploadFile(MultipartFile file);
 }

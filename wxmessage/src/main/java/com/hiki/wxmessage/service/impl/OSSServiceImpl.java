@@ -5,10 +5,16 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.OSSObject;
 import com.hiki.wxmessage.service.OSSService;
+import com.hiki.wxmessage.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.Date;
+import java.util.Map;
+
 
 /**
  * @author ：hiki
@@ -27,19 +33,6 @@ public class OSSServiceImpl implements OSSService {
 
     @Value("${OSS.bucketName}")
     private String bucketName;
-
-    @Override
-    public InputStream getFileStream(String filename){
-        OSS ossClient = this.getOSSClient();
-        String bucketName = this.bucketName;
-        String objectName = filename;
-        // ossObject包含文件所在的存储空间名称、文件名称、文件元信息以及一个输入流。
-        OSSObject ossObject = ossClient.getObject(bucketName, objectName);
-        InputStream fileStream = ossObject.getObjectContent();
-
-        ossClient.shutdown();
-        return fileStream;
-    }
 
     /**
      * 获取OSS实例
@@ -84,5 +77,18 @@ public class OSSServiceImpl implements OSSService {
                 ossObject.close();
             }
         return bytes;
+    }
+
+    @Override
+    public Map<String, String> uploadFile(MultipartFile file) {
+        File thefile = (File)file;
+
+        OSS ossClient = this.getOSSClient();
+        Long time = System.currentTimeMillis();
+        String filename = file.getName() + time;
+        filename = "Blog/works/" + DigestUtils.md5DigestAsHex(filename.getBytes());
+        ossClient.putObject(this.bucketName, filename, thefile);
+
+        return ResultUtil.success_return(filename);
     }
 }

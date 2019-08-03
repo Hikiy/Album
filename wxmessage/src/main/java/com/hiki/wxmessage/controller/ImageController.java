@@ -1,12 +1,16 @@
 package com.hiki.wxmessage.controller;
 
 import com.hiki.wxmessage.service.OSSService;
+import com.hiki.wxmessage.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ：hiki
@@ -62,5 +66,17 @@ public class ImageController {
         }
 
         return bytes;
+    }
+
+    public Map<String, String> uploadFile(@RequestParam("file") MultipartFile file){
+        if (!file.isEmpty()) {
+            String filename = ossService.uploadFile(file);
+
+            return ResultUtil.success_return(filename);
+
+        } else {
+            return ResultUtil.miss_param();
+        }
+
     }
 }
