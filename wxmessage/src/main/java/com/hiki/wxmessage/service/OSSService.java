@@ -11,5 +11,5 @@ import java.util.Map;
  */
 public interface OSSService {
     public byte[] getFileByte(String filename)throws IOException;
-    public Map<String, String> uploadFile(MultipartFile file);
+    public Map<String, String> uploadFile(MultipartFile file, String filename);
 }

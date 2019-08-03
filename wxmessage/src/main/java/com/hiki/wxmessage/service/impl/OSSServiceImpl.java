@@ -6,13 +6,13 @@ import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.OSSObject;
 import com.hiki.wxmessage.service.OSSService;
 import com.hiki.wxmessage.util.ResultUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.Date;
 import java.util.Map;
 
 
@@ -21,6 +21,7 @@ import java.util.Map;
  * 2019/7/29 14:39
  */
 @Service
+@Slf4j
 public class OSSServiceImpl implements OSSService {
     @Value("${OSS.endpoint}")
     private String endpoint;
@@ -79,16 +80,31 @@ public class OSSServiceImpl implements OSSService {
         return bytes;
     }
 
+    /**
+     * 上传文件到OSS
+     * @param file
+     * @return
+     */
     @Override
-    public Map<String, String> uploadFile(MultipartFile file) {
-        File thefile = (File)file;
+    public Map<String, String> uploadFile(MultipartFile file, String filename) {
+        filename = "Blog/" + filename;
+        InputStream fileStream;
 
         OSS ossClient = this.getOSSClient();
-        Long time = System.currentTimeMillis();
-        String filename = file.getName() + time;
-        filename = "Blog/works/" + DigestUtils.md5DigestAsHex(filename.getBytes());
-        ossClient.putObject(this.bucketName, filename, thefile);
-
+        try{
+            fileStream = file.getInputStream();
+            try{
+                ossClient.putObject(this.bucketName, filename, fileStream);
+            }catch (Exception e){
+                log.error("OSS上传文件失败！");
+                return ResultUtil.upload_error();
+            }finally {
+                ossClient.shutdown();
+                fileStream.close();
+            }
+        }catch (Exception e){
+            log.error(e.toString());
+        }
         return ResultUtil.success_return(filename);
     }
 }

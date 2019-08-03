@@ -4,6 +4,7 @@ import com.hiki.wxmessage.service.OSSService;
 import com.hiki.wxmessage.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -68,15 +69,22 @@ public class ImageController {
         return bytes;
     }
 
+    @PostMapping("/uploadfile")
+    @ResponseBody
     public Map<String, String> uploadFile(@RequestParam("file") MultipartFile file){
         if (!file.isEmpty()) {
-            String filename = ossService.uploadFile(file);
-
-            return ResultUtil.success_return(filename);
-
+            Long time = System.currentTimeMillis();
+            String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+            String filename = file.getName() + time;
+            filename = "works/" + DigestUtils.md5DigestAsHex(filename.getBytes()) + ext;
+            Map<String, String> result = ossService.uploadFile(file, filename);
+            if( result.get("ret").equals("0")){
+                return ResultUtil.success_return(result.get("data"));
+            }else{
+                return result;
+            }
         } else {
             return ResultUtil.miss_param();
         }
-
     }
 }

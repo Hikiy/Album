@@ -24,6 +24,7 @@ eureka:
       defaultZone: http://localhost:8001/eureka/
   instance:
     hostname: util
+
 OSS:
   endpoint: ""
   accessKeyId: ""
