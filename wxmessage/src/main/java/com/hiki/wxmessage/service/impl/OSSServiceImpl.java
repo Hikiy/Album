@@ -48,6 +48,12 @@ public class OSSServiceImpl implements OSSService {
         return ossClient;
     }
 
+    /**
+     * 以byte[]格式从OSS获取文件
+     * @param filename
+     * @return
+     * @throws IOException
+     */
     @Override
     public byte[] getFileByte(String filename) throws IOException{
         byte[] bytes = null;
@@ -81,13 +87,13 @@ public class OSSServiceImpl implements OSSService {
     }
 
     /**
-     * 上传文件到OSS
+     * 上传MultipartFile类型的文件到OSS
      * @param file
      * @return
      */
     @Override
-    public Map<String, String> uploadFile(MultipartFile file, String filename) {
-        filename = "Blog/" + filename;
+    public Map<String, String> uploadMultipartFile(MultipartFile file, String filename) {
+        filename = "blog/" + filename;
         InputStream fileStream;
 
         OSS ossClient = this.getOSSClient();
@@ -105,6 +111,29 @@ public class OSSServiceImpl implements OSSService {
         }catch (Exception e){
             log.error(e.toString());
         }
+        return ResultUtil.success_return(filename);
+    }
+
+    /**
+     * 上传File类型的图片到OSS
+     * @param file
+     * @param filename
+     * @return
+     */
+    @Override
+    public Map<String, String> uploadPhoto(File file, String filename) {
+        filename = "blog/" + filename;
+
+        OSS ossClient = this.getOSSClient();
+        try{
+            ossClient.putObject(this.bucketName, filename, file);
+        }catch (Exception e){
+            log.error("OSS上传文件失败！");
+            return ResultUtil.upload_error();
+        }finally {
+            ossClient.shutdown();
+        }
+
         return ResultUtil.success_return(filename);
     }
 }

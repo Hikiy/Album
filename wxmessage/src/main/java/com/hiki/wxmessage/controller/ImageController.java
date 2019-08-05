@@ -1,7 +1,10 @@
 package com.hiki.wxmessage.controller;
 
+import com.hiki.wxmessage.enums.PhotoTypeEnums;
 import com.hiki.wxmessage.service.OSSService;
 import com.hiki.wxmessage.util.ResultUtil;
+import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +20,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/image")
+@Slf4j
 public class ImageController {
     @Autowired
     private OSSService ossService;
@@ -67,22 +71,95 @@ public class ImageController {
         return bytes;
     }
 
-    @PostMapping("/uploadfile")
+    /**
+     * 压缩图片并上传到OSS
+     * @param request
+     * @param file
+     * @param type  上传图片的类型 1:album
+     * @return
+     */
+    @PostMapping("/uploadphoto")
     @ResponseBody
-    public Map<String, String> uploadFile(@RequestParam("file") MultipartFile file){
-        if (!file.isEmpty()) {
-            Long time = System.currentTimeMillis();
-            String ext = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-            String filename = file.getName() + time;
-            filename = "works/" + DigestUtils.md5DigestAsHex(filename.getBytes()) + ext;
-            Map<String, String> result = ossService.uploadFile(file, filename);
-            if( result.get("ret").equals("0")){
-                return ResultUtil.success_return(result.get("data"));
-            }else{
-                return result;
-            }
-        } else {
+    public Map<String, String> uploadPhoto(HttpServletRequest request, @RequestParam("file") MultipartFile file, @RequestParam("type") Integer type){
+
+        if ( file.isEmpty() || type == null || this.getTypeName(type).equals("") ) {
             return ResultUtil.miss_param();
+        }
+
+        String typeName = this.getTypeName(type);
+        String realDir = request.getSession().getServletContext().getRealPath("/");
+        String dir = realDir + "upload";
+        String ext = ".jpg";
+        String sampleName = "sample" + ext;
+
+        //生成临时文件夹
+        File fileDir = new File(dir);
+        if(!fileDir.exists()){
+            fileDir.mkdirs();
+        }
+
+        //压缩图片
+        File newFile = null;
+        newFile = this.fileToThumbnail(file, dir + "/" + sampleName);
+
+        //生成随机文件名
+        Long time = System.currentTimeMillis();
+        String filename = file.getName() + time;
+        filename = typeName + "/" + DigestUtils.md5DigestAsHex(filename.getBytes()) + ext;
+
+        //上传到阿里云OSS
+        Map<String, String> result = ossService.uploadPhoto(newFile, filename);
+
+        //删除临时文件
+        newFile.delete();
+
+        if( result.get("ret").equals("0")){
+            return ResultUtil.success_return(result.get("data"));
+        }else{
+            return result;
+        }
+    }
+
+    /**
+     * 压缩图片
+     * @param file
+     * @param dir
+     * @return
+     */
+    private File fileToThumbnail(MultipartFile file, String dir){
+        File newFile = null;
+        try{
+            Thumbnails.of(file.getInputStream()).size(1920, 1080).toFile(dir);
+            newFile = new File(dir);
+        }catch (IOException e){
+            log.error("压缩图失败:" + e.toString());
+        }
+
+        //如果缩小后依然大于1M则压缩一次
+        while(newFile.length() > 1048576){
+            System.out.println(newFile.length());
+            try{
+                Thumbnails.of(newFile).scale(1f).outputQuality(0.75f).toFile(dir);
+            }catch (IOException e){
+                log.error("压缩图片失败:" + e.toString());
+            }
+            newFile = new File(dir);
+        }
+
+        return newFile;
+    }
+
+    /**
+     * 获取图片类型对应的名字
+     * @param type
+     * @return
+     */
+    private String getTypeName(Integer type){
+        switch (type){
+            case 1 :
+                return PhotoTypeEnums.ALBUM.getType();
+                default:
+                    return "";
         }
     }
 }

@@ -23,6 +23,9 @@ spring:
       suffix: html
   thymeleaf:
     cache: false
+  servlet:
+    multipart:
+      maxFileSize: 25MB
 eureka:
   client:
     service-url:
@@ -35,4 +38,3 @@ OSS:
   accessKeyId: ""
   accessKeySecret: ""
   bucketName: ""
-
