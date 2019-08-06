@@ -1,8 +1,15 @@
 package com.hiki.wxmessage.controller;
 
+import com.hiki.wxmessage.service.OSSService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * @author ：hiki
@@ -10,9 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/album")
+@Slf4j
 public class AlbumController {
+    @Autowired
+    private OSSService ossService;
+
+    /**
+     * 相册首页
+     * @return
+     */
     @GetMapping("/index")
     public String index(){
         return "album_index";
     }
+
 }

@@ -27,4 +27,6 @@ public interface OSSService {
      * @return
      */
     public Map<String, String> uploadPhoto(File file, String filename);
+    public Map<String, String> uploadPhotoByThumbnail(MultipartFile file, String typeName, String code);
+    public Map<String, String> deleteFile(String filename);
 }

@@ -26,6 +26,18 @@ spring:
   servlet:
     multipart:
       maxFileSize: 25MB
+  datasource:
+    url: jdbc:mysql://localhost:3306/album?serverTimezone=CTT&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+  jpa:
+#    properties:
+#      hibernate:
+#        hbm2ddl:
+#          auto: update
+#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
 eureka:
   client:
     service-url:
