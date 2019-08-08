@@ -1,5 +1,6 @@
 package com.hiki.wxmessage.service;
 
+import com.hiki.wxmessage.resultVO.ResultVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -18,7 +19,7 @@ public interface OSSService {
      * @throws IOException
      */
     public byte[] getFileByte(String filename)throws IOException;
-    public Map<String, String> uploadMultipartFile(MultipartFile file, String filename);
+    public ResultVO uploadMultipartFile(MultipartFile file, String filename);
 
     /**
      * 上传File类型的图片到OSS
@@ -26,7 +27,7 @@ public interface OSSService {
      * @param filename
      * @return
      */
-    public Map<String, String> uploadPhoto(File file, String filename);
-    public Map<String, String> uploadPhotoByThumbnail(MultipartFile file, String typeName, String code);
-    public Map<String, String> deleteFile(String filename);
+    public ResultVO uploadPhoto(File file, String filename);
+    public ResultVO uploadPhotoByThumbnail(MultipartFile file, String typeName, String code);
+    public ResultVO deleteFile(String filename);
 }

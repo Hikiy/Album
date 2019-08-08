@@ -1,15 +1,12 @@
 package com.hiki.wxmessage.controller;
 
-import com.google.gson.Gson;
+import com.hiki.wxmessage.resultVO.ResultVO;
 import com.hiki.wxmessage.service.AlbumCategoryService;
 import com.hiki.wxmessage.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 /**
  * @author ：hiki
@@ -25,10 +22,13 @@ public class AlbumCategoryShowController {
      * @return
      */
     @GetMapping("/getbannerlist")
-    public Map<String, String> getBannerList(){
-        Gson gson = new Gson();
-        String data = gson.toJson(albumCategoryService.getBannerList());
-        return ResultUtil.success_return(data);
+    public ResultVO getBannerList(){
+        return ResultUtil.success_return(albumCategoryService.getBannerList());
+    }
+
+    @GetMapping("/getcategorylist")
+    public ResultVO getAlbumCategoryList(){
+        return ResultUtil.success_return(albumCategoryService.getAlbumCategoryList());
     }
 
 //    /**

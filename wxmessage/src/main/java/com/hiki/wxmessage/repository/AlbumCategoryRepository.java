@@ -15,6 +15,10 @@ public interface AlbumCategoryRepository extends JpaRepository<AlbumCategory, In
 
     @Query(value = "select acid, banner from AlbumCategory")
     List<Object> findBannerList();
+
+    @Query(value = "select acid, name from AlbumCategory")
+    List<Object> findCategoryNameList();
+
     AlbumCategory findByAcid(Integer acid);
     List<AlbumCategory> findByCode(String name);
 }

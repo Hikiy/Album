@@ -5,6 +5,7 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.OSSObject;
+import com.hiki.wxmessage.resultVO.ResultVO;
 import com.hiki.wxmessage.service.OSSService;
 import com.hiki.wxmessage.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.Map;
 
@@ -94,7 +96,7 @@ public class OSSServiceImpl implements OSSService {
      * @return
      */
     @Override
-    public Map<String, String> uploadMultipartFile(MultipartFile file, String filename) {
+    public ResultVO uploadMultipartFile(MultipartFile file, String filename) {
         filename = "blog/" + filename;
         InputStream fileStream;
 
@@ -123,7 +125,7 @@ public class OSSServiceImpl implements OSSService {
      * @return
      */
     @Override
-    public Map<String, String> uploadPhoto(File file, String filename) {
+    public ResultVO uploadPhoto(File file, String filename) {
         filename = "blog/" + filename;
 
         OSS ossClient = this.getOSSClient();
@@ -146,7 +148,7 @@ public class OSSServiceImpl implements OSSService {
      * @return
      */
     @Override
-    public Map<String, String> uploadPhotoByThumbnail(MultipartFile file, String typeName, String code){
+    public ResultVO uploadPhotoByThumbnail(MultipartFile file, String typeName, String code){
         String sampleName = "sample.jpg";
         String realDir = System.getProperty("user.dir");
         String dir = realDir + "\\src\\upload";
@@ -167,13 +169,13 @@ public class OSSServiceImpl implements OSSService {
         filename = typeName + "/" + code + "/" + DigestUtils.md5DigestAsHex(filename.getBytes()) + ".jpg";
 
         //上传到阿里云OSS
-        Map<String, String> result = this.uploadPhoto(newFile, filename);
+        ResultVO result = this.uploadPhoto(newFile, filename);
 
         //删除临时文件
         newFile.delete();
 
-        if( result.get("ret").equals("0")){
-            return ResultUtil.success_return(result.get("data"));
+        if( result.getRet() == 0 ){
+            return ResultUtil.success_return(result.getData());
         }else{
             return result;
         }
@@ -184,7 +186,7 @@ public class OSSServiceImpl implements OSSService {
      * @param filename
      * @return
      */
-    public Map<String, String> deleteFile(String filename){
+    public ResultVO deleteFile(String filename){
         OSS ossClient = this.getOSSClient();
         try{
             ossClient.deleteObject(this.bucketName, filename);
@@ -206,14 +208,19 @@ public class OSSServiceImpl implements OSSService {
     private File fileToThumbnail(MultipartFile file, String dir){
         File newFile = null;
         try{
-            Thumbnails.of(file.getInputStream()).size(1920, 1080).toFile(dir);
+            Thumbnails.of(file.getInputStream()).scale(1f).toFile(dir);
             newFile = new File(dir);
+            if( this.getImgHeight(newFile) > 1080 || this.getImgWidth(newFile) > 1920 ){
+                Thumbnails.of(newFile).size(1920, 1080).toFile(dir);
+                newFile = new File(dir);
+            }
         }catch (IOException e){
             log.error("压缩图失败:" + e.toString());
         }
 
-        //如果缩小后依然大于1M则压缩一次
-        while(newFile.length() > 1048576){
+        //如果缩小后依然大于1M则压缩
+        int i = 3;
+        while(newFile.length() > 1048576 && i > 0 ){
             System.out.println(newFile.length());
             try{
                 Thumbnails.of(newFile).scale(1f).outputQuality(0.75f).toFile(dir);
@@ -221,8 +228,49 @@ public class OSSServiceImpl implements OSSService {
                 log.error("压缩图片失败:" + e.toString());
             }
             newFile = new File(dir);
+            i--;
         }
-
         return newFile;
     }
+    /**
+     * 获取图片宽度
+     * @param file  图片文件
+     * @return 宽度
+     */
+    private int getImgWidth(File file) {
+        InputStream is = null;
+        BufferedImage src = null;
+        int ret = -1;
+        try {
+            is = new FileInputStream(file);
+            src = javax.imageio.ImageIO.read(is);
+            ret = src.getWidth(null); // 得到源图宽
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
+
+    /**
+     * 获取图片高度
+     * @param file  图片文件
+     * @return 高度
+     */
+    private int getImgHeight(File file) {
+        InputStream is = null;
+        BufferedImage src = null;
+        int ret = -1;
+        try {
+            is = new FileInputStream(file);
+            src = javax.imageio.ImageIO.read(is);
+            ret = src.getHeight(null); // 得到源图高
+            is.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret;
+    }
+
 }

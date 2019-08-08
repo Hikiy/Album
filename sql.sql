@@ -16,10 +16,10 @@ create table `photos`(
 	`pid` int(11) unsigned auto_increment primary key,
     `acid` int(6) unsigned not null,
     `description` varchar(10) not null,
-    `link` varchar(50) not null,
+    `link` varchar(100) not null,
     `status` tinyint(4) unsigned default 1 comment '0禁用 1正常 2私有',
+    `time` varchar(15) not null,
 	`created` int(11) unsigned not null,
-    `updated` int(11) unsigned not null,
     INDEX acid_index (`acid`)  
 );
 
