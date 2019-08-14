@@ -6,6 +6,7 @@ create table `album_category`(
     `name` varchar(6) not null ,
     `code` varchar(10) not null,
     `banner` text not null,
+    `priority` int(2) unsigned default 1 comment '优先级，越大越靠前',
     `status` tinyint(4) unsigned default 1 comment '0禁用 1正常 2私有',
     `created` int(11) unsigned not null,
     `updated` int(11) unsigned not null,

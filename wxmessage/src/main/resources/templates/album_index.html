@@ -7,7 +7,6 @@
 <title>Album</title>
 
 <link rel="stylesheet" type="text/css" href="../../css/style1.css" />
-<script src="../../js/modernizr-custom.js"></script>
 
 </head>
 <body class="demo-1">
@@ -16,14 +15,15 @@
 <script src="/follow.js" type="text/javascript"></script>
 </div>
 <div class="container">
-	<div class="content">
+	<div class="content" id="content">
         <div class="grid__item" style="width: 95%;padding: 30px 10px 30px 10px;" data-size="1x1" align="center" ><a class="img-wrap"><img src="../../weix/11.jpg" />
             <div class="description description--grid">日本</div>
         </a> </div>
 		<div class="grid">
-			<div class="grid__item" data-size="1280x853"> <a href="/weix/10.jpg" class="img-wrap"><img src="/weix/10.jpg" alt="img1" />
+			<div class="grid__item" data-size="1280x720"> <a href="/weix/10.jpg" class="img-wrap"><img src="/weix/10.jpg" alt="img1" />
 				<div class="description description--grid">日本<br/>2019.03.01</div>
-				</a> </div>
+				</a>
+			</div>
 			<div class="grid__item" data-size="958x1280"> <a href="/weix/10.jpg" class="img-wrap"><img src="/weix/10.jpg" alt="img2" />
 				<div class="description description--grid">Demesne</div>
 				</a> </div>
@@ -85,7 +85,11 @@
 	</div>
 </div>
 <!-- /container -->
-
+<!--<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>-->
+<!--<script type="text/javascript" src="../../js/album/album_show.js"></script>-->
+<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="../../js/album/album_show.js"></script>
+<script src="../../js/modernizr-custom.js"></script>
 <script src="../../js/imagesloaded.pkgd.min.js"></script>
 <script src="../../js/masonry.pkgd.min.js"></script>
 <script src="../../js/classie.js"></script>
@@ -108,34 +112,62 @@
 			g.appendChild(circle);
 			previewEl.appendChild(dummy);
 		}
-		
-		new GridFx(document.querySelector('.grid'), {
-			onInit : function(instance) {
-				createCircleOverlay(instance.previewEl);
-			},
-			onResize : function(instance) {
-				instance.previewEl.querySelector('svg circle').setAttributeNS(null, 'r', Math.sqrt(Math.pow(instance.previewEl.offsetWidth,2) + Math.pow(instance.previewEl.offsetHeight,2)));
-			},
-			onOpenItem : function(instance, item) {
-				// item's image
-				var gridImg = item.querySelector('img'),
-					gridImgOffset = gridImg.getBoundingClientRect(),
-					win = {width: document.documentElement.clientWidth, height: window.innerHeight},
-					SVGCircleGroupEl = instance.previewEl.querySelector('svg > g'),
-					SVGCircleEl = SVGCircleGroupEl.querySelector('circle');
-					
-				SVGCircleEl.setAttributeNS(null, 'r', Math.sqrt(Math.pow(instance.previewEl.offsetWidth,2) + Math.pow(instance.previewEl.offsetHeight,2)));
-				// set the transform for the SVG g node. This will animate the circle overlay. The origin of the circle depends on the position of the clicked item.
-				if( gridImgOffset.left + gridImg.offsetWidth/2 < win.width/2 ) {
-					SVGCircleGroupEl.setAttributeNS(null, 'transform', 'translate(' + win.width + ', ' + (gridImgOffset.top + gridImg.offsetHeight/2 < win.height/2 ? win.height : 0) + ')');
+		var gridList = document.querySelectorAll('.grid');
+		var length = gridList['length'];
+
+		for(var i = 0;i < length ;i++){
+			new GridFx(gridList[i], {
+				onInit : function(instance) {
+					createCircleOverlay(instance.previewEl);
+				},
+				onResize : function(instance) {
+					instance.previewEl.querySelector('svg circle').setAttributeNS(null, 'r', Math.sqrt(Math.pow(instance.previewEl.offsetWidth,2) + Math.pow(instance.previewEl.offsetHeight,2)));
+				},
+				onOpenItem : function(instance, item) {
+					// item's image
+					var gridImg = item.querySelector('img'),
+							gridImgOffset = gridImg.getBoundingClientRect(),
+							win = {width: document.documentElement.clientWidth, height: window.innerHeight},
+							SVGCircleGroupEl = instance.previewEl.querySelector('svg > g'),
+							SVGCircleEl = SVGCircleGroupEl.querySelector('circle');
+
+					SVGCircleEl.setAttributeNS(null, 'r', Math.sqrt(Math.pow(instance.previewEl.offsetWidth,2) + Math.pow(instance.previewEl.offsetHeight,2)));
+					// set the transform for the SVG g node. This will animate the circle overlay. The origin of the circle depends on the position of the clicked item.
+					if( gridImgOffset.left + gridImg.offsetWidth/2 < win.width/2 ) {
+						SVGCircleGroupEl.setAttributeNS(null, 'transform', 'translate(' + win.width + ', ' + (gridImgOffset.top + gridImg.offsetHeight/2 < win.height/2 ? win.height : 0) + ')');
+					}
+					else {
+						SVGCircleGroupEl.setAttributeNS(null, 'transform', 'translate(0, ' + (gridImgOffset.top + gridImg.offsetHeight/2 < win.height/2 ? win.height : 0) + ')');
+					}
 				}
-				else {
-					SVGCircleGroupEl.setAttributeNS(null, 'transform', 'translate(0, ' + (gridImgOffset.top + gridImg.offsetHeight/2 < win.height/2 ? win.height : 0) + ')');
-				}
-			}
-		});
+			});
+		}
+		// new GridFx(document.querySelector('.grid'), {
+		// 	onInit : function(instance) {
+		// 		createCircleOverlay(instance.previewEl);
+		// 	},
+		// 	onResize : function(instance) {
+		// 		instance.previewEl.querySelector('svg circle').setAttributeNS(null, 'r', Math.sqrt(Math.pow(instance.previewEl.offsetWidth,2) + Math.pow(instance.previewEl.offsetHeight,2)));
+		// 	},
+		// 	onOpenItem : function(instance, item) {
+		// 		// item's image
+		// 		var gridImg = item.querySelector('img'),
+		// 			gridImgOffset = gridImg.getBoundingClientRect(),
+		// 			win = {width: document.documentElement.clientWidth, height: window.innerHeight},
+		// 			SVGCircleGroupEl = instance.previewEl.querySelector('svg > g'),
+		// 			SVGCircleEl = SVGCircleGroupEl.querySelector('circle');
+		//
+		// 		SVGCircleEl.setAttributeNS(null, 'r', Math.sqrt(Math.pow(instance.previewEl.offsetWidth,2) + Math.pow(instance.previewEl.offsetHeight,2)));
+		// 		// set the transform for the SVG g node. This will animate the circle overlay. The origin of the circle depends on the position of the clicked item.
+		// 		if( gridImgOffset.left + gridImg.offsetWidth/2 < win.width/2 ) {
+		// 			SVGCircleGroupEl.setAttributeNS(null, 'transform', 'translate(' + win.width + ', ' + (gridImgOffset.top + gridImg.offsetHeight/2 < win.height/2 ? win.height : 0) + ')');
+		// 		}
+		// 		else {
+		// 			SVGCircleGroupEl.setAttributeNS(null, 'transform', 'translate(0, ' + (gridImgOffset.top + gridImg.offsetHeight/2 < win.height/2 ? win.height : 0) + ')');
+		// 		}
+		// 	}
+		// });
 	})();
 </script>
-
 </body>
 </html>

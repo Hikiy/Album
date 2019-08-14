@@ -4,7 +4,6 @@ $(function() {
     var uploadPhotoUrl = '/image/uploadphoto';
     getCategory();
 
-    //用于获取商品信息
     function getCategory() {
         $
             .getJSON(
@@ -12,18 +11,7 @@ $(function() {
                 function(data) {
                     if (data.ret == 0) {
                         var categorylist = data.data;
-                        // $('#product-name').val(product.productName);
-                        // $('#product-desc').val(product.productDesc);
-                        // $('#priority').val(product.priority);
-                        // $('#normal-price').val(product.normalPrice);
-                        // $('#promotion-price').val(
-                        //     product.promotionPrice);
-                        //
-                        // //获取当前商品类别和商品类别列表
                         var optionHtml = '';
-                        // var optionArr = data.productCategoryList;
-                        // var optionSelected = product.productCategory.productCategoryId;
-                        //遍历生成商品类别列表
                         categorylist
                             .map(function(item, index) {
                                 optionHtml += '<option id="'
@@ -53,14 +41,7 @@ $(function() {
             formData.append('category', category);
             formData.append('description', description);
             formData.append('time', time);
-            //遍历详情图，获取文件流，这里index是从0开始，所以后端遍历的时候也使用从0开始
-            // $('.detail-img').map(
-            //     function(index, item) {
-            //         if ($('.detail-img')[index].files.length > 0) {
-            //             formData.append('productImg' + index,
-            //                 $('.detail-img')[index].files[0]);
-            //         }
-            //     });
+
             $.ajax({
                 url : uploadPhotoUrl,
                 type : 'POST',

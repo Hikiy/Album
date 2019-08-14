@@ -55,6 +55,7 @@
 		return a;
 	}
 
+	var count = 1;
 	/**
 	 * GridFx obj
 	 */
@@ -64,7 +65,8 @@
 		extend( this.options, options );
 		
 		this.items = [].slice.call(this.gridEl.querySelectorAll('.grid__item'));
-		this.previewEl = nextSibling(this.gridEl);
+		this.previewEl = document.getElementById("preview"+count)
+		count++;
 		this.isExpanded = false;
 		this.isAnimating = false;
 		this.closeCtrl = this.previewEl.querySelector('button.action--close');
