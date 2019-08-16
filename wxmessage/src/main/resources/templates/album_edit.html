@@ -2,61 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>上传图片</title>
+    <title>相册编辑</title>
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
 </head>
 <body class="theme-dark">
 <header class="bar bar-nav">
-    <h1 class='title'>上传图片</h1>
+    <h1 class='title'>相册编辑</h1>
 </header>
 <div class="content">
     <div class="list-block">
         <ul>
-            <li>
-                <div class="item-content">
-                    <div class="item-media"><i class="icon icon-form-gender"></i></div>
-                    <div class="item-inner">
-                        <div class="item-title label">相册</div>
-                        <div class="item-input">
-                            <select id="album">
-                            </select>
-                        </div>
-                    </div>
-                </div>
             </li>
-            <li>
-                <div class="item-content">
-                    <div class="item-media"><i class="icon icon-form-gender"></i></div>
-                    <div class="item-inner">
-                        <div class="item-title label">分类</div>
-                        <div class="item-input">
-                            <select id="category">
-                            </select>
-                        </div>
+            <div class="item-content">
+                <div class="item-media"><i class="icon icon-form-email"></i></div>
+                <div class="item-inner">
+                    <div class="item-title label">相册名称</div>
+                    <div class="item-input">
+                        <input type="email" placeholder="相册名称" id="name" >
                     </div>
                 </div>
-            </li>
-            <!-- Date -->
-            <li>
-                <div class="item-content">
-                    <div class="item-media"><i class="icon icon-form-calendar"></i></div>
-                    <div class="item-inner">
-                        <div class="item-title label">时间</div>
-                        <div class="item-input">
-                            <input type="date" placeholder="Birth day" value="2019-08-08" id="time">
-                        </div>
-                    </div>
-                </div>
+            </div>
             </li>
             </li>
             <div class="item-content">
                 <div class="item-media"><i class="icon icon-form-email"></i></div>
                 <div class="item-inner">
-                    <div class="item-title label">描述</div>
+                    <div class="item-title label">相册code</div>
                     <div class="item-input">
-                        <input type="email" placeholder="图片描述" id="description" >
+                        <input type="email" placeholder="相册code 用于存储照片的文件夹名，建议使用英文" id="code" >
                     </div>
                 </div>
             </div>
@@ -67,7 +42,7 @@
                         <i class="icon icon-form-email"></i>
                     </div>
                     <div class="item-inner">
-                        <div class="item-title label">图片</div>
+                        <div class="item-title label">相册banner</div>
                         <div class="item-input">
                             <input type="file" id="file">
                         </div>
@@ -110,6 +85,6 @@
 </div>
 
 <script type='text/javascript'
-        src='../../js/upload/upload.js'></script>
+        src='../../js/album/album_edit.js'></script>
 </body>
 </html>

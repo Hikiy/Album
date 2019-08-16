@@ -1,8 +1,12 @@
 $(function() {
-    var categoryUrl = '/albumcategory/getbannerlist';
+    var categoryUrl = '/albumcategory/getcategorylistbyaid';
     var photoUrl = '/album/getphotolistbyacid?acid=';
     var showimageUrl = '/image/showimage';
     var count = 0;
+    var aid = getQueryVariable("aid");
+    if( aid == null || aid == '' || aid < 1){
+        aid = 1;
+    }
 
     $.ajaxSettings.async = false;
     getCategory();
@@ -11,7 +15,7 @@ $(function() {
     function getCategory() {
         $
             .getJSON(
-                categoryUrl,
+                categoryUrl + "?aid=" + aid,
                 function(data) {
                     if (data.ret == 0) {
                         var bannerlist = data.data;
@@ -54,5 +58,16 @@ $(function() {
                 });
 
         return photoHtml;
+    }
+
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
     }
 }(window));

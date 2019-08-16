@@ -1,7 +1,6 @@
 package com.hiki.wxmessage.service.impl;
 
 import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.OSSObject;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.Map;
 
 
 /**
@@ -144,42 +142,43 @@ public class OSSServiceImpl implements OSSService {
     /**
      * 压缩MultipartFile类型图片并上传到OSS
      * @param file
-     * @param typeName
+     * @param albumCode
+     * @param code
      * @return
      */
-    @Override
-    public ResultVO uploadPhotoByThumbnail(MultipartFile file, String typeName, String code){
-        String sampleName = "sample.jpg";
-        String realDir = System.getProperty("user.dir");
-        String dir = realDir + "\\src\\upload";
-
-        //生成临时文件夹
-        File fileDir = new File(dir);
-        if(!fileDir.exists()){
-            fileDir.mkdirs();
-        }
-
-        //压缩图片
-        File newFile = null;
-        newFile = this.fileToThumbnail(file, dir + "/" + sampleName);
-
-        //生成随机文件名
-        Long time = System.currentTimeMillis();
-        String filename = file.getName() + time;
-        filename = typeName + "/" + code + "/" + DigestUtils.md5DigestAsHex(filename.getBytes()) + ".jpg";
-
-        //上传到阿里云OSS
-        ResultVO result = this.uploadPhoto(newFile, filename);
-
-        //删除临时文件
-        newFile.delete();
-
-        if( result.getRet() == 0 ){
-            return ResultUtil.success_return(result.getData());
-        }else{
-            return result;
-        }
-    }
+//    @Override
+//    public ResultVO uploadPhotoByThumbnail(MultipartFile file, String albumCode, String code){
+//        String sampleName = "sample.jpg";
+//        String realDir = System.getProperty("user.dir");
+//        String dir = realDir + "\\src\\upload";
+//
+//        //生成临时文件夹
+//        File fileDir = new File(dir);
+//        if(!fileDir.exists()){
+//            fileDir.mkdirs();
+//        }
+//
+//        //压缩图片
+//        File newFile = null;
+//        newFile = this.fileToThumbnail(file, dir + "/" + sampleName);
+//
+//        //生成随机文件名
+//        Long time = System.currentTimeMillis();
+//        String filename = file.getName() + time;
+//        filename = albumCode + "/" + code + "/" + DigestUtils.md5DigestAsHex(filename.getBytes()) + ".jpg";
+//
+//        //上传到阿里云OSS
+//        ResultVO result = this.uploadPhoto(newFile, filename);
+//
+//        //删除临时文件
+//        newFile.delete();
+//
+//        if( result.getRet() == 0 ){
+//            return ResultUtil.success_return(result.getData());
+//        }else{
+//            return result;
+//        }
+//    }
 
     /**
      * 从OSS删除文件
@@ -197,6 +196,59 @@ public class OSSServiceImpl implements OSSService {
             ossClient.shutdown();
         }
         return ResultUtil.success_return(filename);
+    }
+
+    /**
+     * 上传File类型的图片到OSS
+     * @param file
+     * @param albumCode
+     * @param code
+     * @param type 1:相册banner, 2:相册分类banner, 3:普通相片
+     * @return
+     */
+    @Override
+    public ResultVO uploadPhotoByThumbnail(MultipartFile file, String albumCode, String code, int type) {
+        String fileName = null;
+        String ossfilename = null;
+        if( type == 1 ){
+            fileName = albumCode + "_banner.jpg";
+            ossfilename = albumCode + "/" + fileName;
+        }else if( type == 2 ){
+            fileName = code + "_category.jpg";
+            ossfilename = albumCode + "/" + code + "/" + fileName;
+        }else if( type == 3 ){
+            fileName = "sample.jpg";
+            //生成随机文件名
+            Long time = System.currentTimeMillis();
+            ossfilename = file.getName() + time;
+            ossfilename = albumCode + "/" + code + "/" + DigestUtils.md5DigestAsHex(ossfilename.getBytes()) + ".jpg";
+        } else{
+            return ResultUtil.upload_error();
+        }
+        String realDir = System.getProperty("user.dir");
+        String dir = realDir + "\\src\\upload";
+
+        //生成临时文件夹
+        File fileDir = new File(dir);
+        if(!fileDir.exists()){
+            fileDir.mkdirs();
+        }
+
+        //压缩图片
+        File newFile = null;
+        newFile = this.fileToThumbnail(file, dir + "/" + fileName);
+
+        //上传到阿里云OSS
+        ResultVO result = this.uploadPhoto(newFile, ossfilename);
+
+        //删除临时文件
+        newFile.delete();
+
+        if( result.getRet() == 0 ){
+            return ResultUtil.success_return(result.getData());
+        }else{
+            return result;
+        }
     }
 
     /**

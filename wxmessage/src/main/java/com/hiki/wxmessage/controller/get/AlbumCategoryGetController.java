@@ -1,4 +1,4 @@
-package com.hiki.wxmessage.controller;
+package com.hiki.wxmessage.controller.get;
 
 import com.hiki.wxmessage.resultVO.ResultVO;
 import com.hiki.wxmessage.service.AlbumCategoryService;
@@ -6,6 +6,7 @@ import com.hiki.wxmessage.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/albumcategory")
-public class AlbumCategoryShowController {
+public class AlbumCategoryGetController {
     @Autowired
     private AlbumCategoryService albumCategoryService;
     /**
@@ -29,6 +30,16 @@ public class AlbumCategoryShowController {
     @GetMapping("/getcategorylist")
     public ResultVO getAlbumCategoryList(){
         return ResultUtil.success_return(albumCategoryService.getAlbumCategoryList());
+    }
+
+    @GetMapping("/getcategorylistbyaid")
+    public ResultVO getAlbumCategoryListByAid(@RequestParam("aid") int aid){
+        return ResultUtil.success_return(albumCategoryService.getAlbumCategoryListByAid(aid));
+    }
+
+    @GetMapping("/getcategorybyacid")
+    public ResultVO getAlbumCategoryByAcid(@RequestParam("acid") int acid){
+        return ResultUtil.success_return(albumCategoryService.getAlbumCategoryById(acid));
     }
 
 //    /**

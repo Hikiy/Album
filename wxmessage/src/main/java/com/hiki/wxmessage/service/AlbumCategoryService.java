@@ -13,7 +13,14 @@ public interface AlbumCategoryService {
     public List<AlbumCategory> getAlbumCategoryList();
 
     public List<AlbumBannerVO> getBannerList();
+
     public Boolean addAlbumCategory(AlbumCategory albumCategoryEntity);
+
     public AlbumCategory getAlbumCategoryById(Integer acid);
+
     public List<AlbumCategory> getAlbumCategoryListByCode(String code);
+
+    public List<AlbumCategory> getAlbumCategoryListByAid(int aid);
+
+    public Boolean updateAlbumCategoryByAcid(int acid, int aid, String name , String code, int priority, String banner);
 }

@@ -1,7 +1,7 @@
-package com.hiki.wxmessage.controller;
+package com.hiki.wxmessage.controller.get;
 
-import com.hiki.wxmessage.entity.Photos;
 import com.hiki.wxmessage.resultVO.ResultVO;
+import com.hiki.wxmessage.service.AlbumsService;
 import com.hiki.wxmessage.service.PhotosService;
 import com.hiki.wxmessage.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/album")
 public class AlbumGetController {
     @Autowired
+    AlbumsService albumsService;
+
+    @Autowired
     PhotosService photosService;
 
     @GetMapping("/getphotolistbyacid")
     public ResultVO getPhotoListByAcid(@RequestParam("acid")int acid){
         return ResultUtil.success_return(photosService.getPhotoListByAcid(acid));
+    }
+
+    @GetMapping("/getalbumlist")
+    public ResultVO getAlbumList(){
+        return ResultUtil.success_return(albumsService.getAlbumsList());
+    }
+
+    @GetMapping("/getalbumbyaid")
+    public ResultVO getalbumbyaid(@RequestParam("aid") int aid){
+        return ResultUtil.success_return(albumsService.getAlbumsByAid(aid));
     }
 }

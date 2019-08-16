@@ -28,6 +28,16 @@ public interface OSSService {
      * @return
      */
     public ResultVO uploadPhoto(File file, String filename);
-    public ResultVO uploadPhotoByThumbnail(MultipartFile file, String typeName, String code);
+//    public ResultVO uploadPhotoByThumbnail(MultipartFile file, String albumCode, String code);
     public ResultVO deleteFile(String filename);
+
+    /**
+     * 上传File类型的图片到OSS
+     * @param file
+     * @param albumCode
+     * @param code
+     * @param type  1:相册banner, 2:相册分类banner, 3:普通相片
+     * @return
+     */
+    public ResultVO uploadPhotoByThumbnail(MultipartFile file, String albumCode, String code, int type);
 }

@@ -7,31 +7,28 @@ import java.io.Serializable;
 
 /**
  * @author ：hiki
- * 2019/8/6 10:21
+ * 2019/8/16 16:18
  */
 @Entity
 @Data
-public class AlbumCategory implements Serializable {
-    private static final long serialVersionUID = -3240292504277204917L;
+public class Users implements Serializable {
+    private static final long serialVersionUID = -4309072564161374460L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int acid;
+    private int uid;
 
     @Column(nullable = false)
-    private int aid;
+    private String username;
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
-    private String code;
+    private String passSalt;
 
     @Column(nullable = false)
-    private String banner;
-
-    @Column
-    private int priority;
+    private String passHash;
 
     @Column
     private int status;

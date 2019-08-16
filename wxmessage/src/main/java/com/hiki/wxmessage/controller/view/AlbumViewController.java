@@ -1,4 +1,4 @@
-package com.hiki.wxmessage.controller;
+package com.hiki.wxmessage.controller.view;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/album")
 @Slf4j
-public class AlbumShowController {
-
+public class AlbumViewController {
     /**
      * 相册首页
      * @return
@@ -22,5 +21,4 @@ public class AlbumShowController {
     public String index(){
         return "album_index";
     }
-
 }

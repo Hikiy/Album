@@ -1,13 +1,36 @@
 $(function() {
-    //通过productId获取信息
-    var infoUrl = '/albumcategory/getcategorylist';
-    var uploadPhotoUrl = '/image/uploadphoto';
-    getCategory();
+    var infoUrl = '/albumcategory/getcategorylistbyaid';
+    var uploadPhotoUrl = '/admin/image/uploadphoto';
+    var albumUrl = '/album/getalbumlist';
 
-    function getCategory() {
+    getAlbum();
+
+    function getAlbum() {
         $
             .getJSON(
-                infoUrl,
+                albumUrl,
+                function(data) {
+                    if (data.ret == 0) {
+                        var albumlist = data.data;
+                        var optionHtml = '';
+                        albumlist
+                            .map(function(item, index) {
+                                optionHtml += '<option id="'
+                                    + item.aid
+                                    + '"'
+                                    + '>'
+                                    + item.name
+                                    + '</option>';
+                            });
+                        $('#album').html(optionHtml);
+                    }
+                });
+    }
+
+    function getCategory(aid) {
+        $
+            .getJSON(
+                infoUrl + '?aid='+ aid,
                 function(data) {
                     if (data.ret == 0) {
                         var categorylist = data.data;
@@ -26,19 +49,23 @@ $(function() {
                 });
     }
 
+    $('#album').change(
+        function() {
+            var aid = $('#album').find("option:checked").attr("id");
+            getCategory(aid);
+        }
+    );
     //提交按钮事件对商品编辑和商品添加采取不同操作
     $('#submit').click(
         function() {
-            var type = $('#album').find("option:checked").attr("id");
-            var category = $('#category').find("option:checked").attr("id");
+            var acid = $('#category').find("option:checked").attr("id");
             var description = $('#description').val();
             var time = $('#time').val();
             var file = $('#file')[0].files[0];
             //创建表单对象，用于传递给后端
             var formData = new FormData();
             formData.append('file', file);
-            formData.append('type', type);
-            formData.append('category', category);
+            formData.append('acid', acid);
             formData.append('description', description);
             formData.append('time', time);
 

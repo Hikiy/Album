@@ -59,6 +59,7 @@ public class AlbumCategoryImpl implements AlbumCategoryService {
         }
     }
 
+    @Override
     public AlbumCategory getAlbumCategoryById(Integer acid){
         AlbumCategory albumCategory =albumCategoryRepository.findByAcid(acid);
         return albumCategory;
@@ -68,5 +69,43 @@ public class AlbumCategoryImpl implements AlbumCategoryService {
     public List<AlbumCategory> getAlbumCategoryListByCode(String code) {
         List<AlbumCategory> list = albumCategoryRepository.findByCode(code);
         return list;
+    }
+
+    @Override
+    public List<AlbumCategory> getAlbumCategoryListByAid(int aid) {
+        return albumCategoryRepository.findAllByAidOrderByPriorityDesc(aid);
+    }
+
+    /**
+     * 修改上册分类信息
+     * @param acid
+     * @param aid
+     * @param name
+     * @param code
+     * @param priority
+     * @param banner
+     * @return
+     */
+    public Boolean updateAlbumCategoryByAcid(int acid, int aid, String name , String code, int priority, String banner){
+        int time = (int)(new Date().getTime()/1000);
+        AlbumCategory oldAlbumCategory = albumCategoryRepository.findByAcid(acid);
+        if(oldAlbumCategory == null){
+            return false;
+        }
+
+        AlbumCategory albumCategory = new AlbumCategory();
+        albumCategory.setAcid(acid);
+        albumCategory.setAid(aid);
+        albumCategory.setCode(code);
+        albumCategory.setPriority(priority);
+        albumCategory.setBanner(banner);
+        albumCategory.setCreated(oldAlbumCategory.getCreated());
+        albumCategory.setUpdated(time);
+        try{
+            albumCategoryRepository.save(albumCategory);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }
