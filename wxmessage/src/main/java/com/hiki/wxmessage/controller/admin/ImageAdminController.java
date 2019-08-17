@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/admin/image")
-public class imageAdminController {
+public class ImageAdminController {
     @Autowired
     AlbumsService albumsService;
 

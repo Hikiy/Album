@@ -1,4 +1,4 @@
-package com.hiki.wxmessage.controller.admin;
+package com.hiki.wxmessage.controller.auth;
 
 import com.hiki.wxmessage.entity.Users;
 import com.hiki.wxmessage.resultVO.ResultVO;

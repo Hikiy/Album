@@ -10,5 +10,10 @@ import java.util.List;
  */
 public interface PhotosService {
     public Boolean addPhoto(Photos photo);
+
     public List<Photos> getPhotoListByAcid(int acid);
+
+    public Boolean deletePhotoByPid(int pid);
+
+    public Photos getPhotoByPid(int pid);
 }

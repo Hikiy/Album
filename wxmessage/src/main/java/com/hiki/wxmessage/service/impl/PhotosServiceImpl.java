@@ -38,8 +38,38 @@ public class PhotosServiceImpl implements PhotosService {
         }
     }
 
+    /**
+     * 通过acid查询照片列表
+     * @param acid
+     * @return
+     */
     @Override
     public List<Photos> getPhotoListByAcid(int acid) {
         return photosRepository.findAllByAcid(acid);
+    }
+
+    /**
+     * 删除照片
+     * @param pid
+     * @return
+     */
+    @Override
+    public Boolean deletePhotoByPid(int pid) {
+        try{
+            photosRepository.deleteByPid(pid);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 通过pid查询照片信息
+     * @param pid
+     * @return
+     */
+    @Override
+    public Photos getPhotoByPid(int pid) {
+        return photosRepository.findByPid(pid);
     }
 }
