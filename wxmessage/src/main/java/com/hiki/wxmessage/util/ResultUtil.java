@@ -60,4 +60,44 @@ public class ResultUtil {
         result.setMsg("code exist");
         return result;
     }
+
+    //账号或密码错误
+    public static ResultVO login_error(){
+        ResultVO result = new ResultVO();
+        result.setRet(-6);
+        result.setMsg("login error");
+        return result;
+    }
+
+    //账号已存在
+    public static ResultVO username_exist(){
+        ResultVO result = new ResultVO();
+        result.setRet(-7);
+        result.setMsg("username exist");
+        return result;
+    }
+
+    //非法操作
+    public static ResultVO illegal_option(){
+        ResultVO result = new ResultVO();
+        result.setRet(-8);
+        result.setMsg("illegal option");
+        return result;
+    }
+
+    //重复登录
+    public static ResultVO login_repeat(){
+        ResultVO result = new ResultVO();
+        result.setRet(-9);
+        result.setMsg("login repeat");
+        return result;
+    }
+
+    //验证码错误
+    public static ResultVO code_error(){
+        ResultVO result = new ResultVO();
+        result.setRet(-10);
+        result.setMsg("code error");
+        return result;
+    }
 }

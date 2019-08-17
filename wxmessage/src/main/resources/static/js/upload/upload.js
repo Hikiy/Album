@@ -55,7 +55,7 @@ $(function() {
             getCategory(aid);
         }
     );
-    //提交按钮事件对商品编辑和商品添加采取不同操作
+
     $('#submit').click(
         function() {
             var acid = $('#category').find("option:checked").attr("id");

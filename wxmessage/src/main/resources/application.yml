@@ -1,5 +1,8 @@
 server:
   port: 8011
+  servlet:
+    session:
+      timeout: 20m
 spring:
   application:
     name: util

@@ -25,4 +25,9 @@ public class AdminViewController {
     public String albumcategoryedit(){
         return "album_category_edit";
     }
+
+    @GetMapping("/photosmanagement")
+    public String photosmanagement(){
+        return "photo_management";
+    }
 }

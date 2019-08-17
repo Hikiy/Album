@@ -11,4 +11,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface UsersRepository extends JpaRepository<Users, Integer> {
     @Query(value = "select uid, username, name, passSalt, passHash, created from Users where status = 1")
     public Users findByUsername(String username);
+
+    public Users findAllByUsername(String username);
 }
