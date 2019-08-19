@@ -1,6 +1,7 @@
 package com.hiki.wxmessage.service;
 
 import com.hiki.wxmessage.entity.Photos;
+import com.hiki.wxmessage.resultVO.PhotoShowVO;
 
 import java.util.List;
 
@@ -11,9 +12,9 @@ import java.util.List;
 public interface PhotosService {
     public Boolean addPhoto(Photos photo);
 
-    public List<Photos> getPhotoListByAcid(int acid);
+    public List<PhotoShowVO> getPhotoListByAcid(int acid);
 
     public Boolean deletePhotoByPid(int pid);
 
-    public Photos getPhotoByPid(int pid);
+    public PhotoShowVO getPhotoByPid(int pid);
 }

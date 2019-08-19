@@ -2,12 +2,16 @@ package com.hiki.wxmessage.service.impl;
 
 import com.hiki.wxmessage.entity.Photos;
 import com.hiki.wxmessage.repository.PhotosRepository;
+import com.hiki.wxmessage.resultVO.PhotoShowVO;
 import com.hiki.wxmessage.service.PhotosService;
+import com.hiki.wxmessage.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 
 /**
  * @author ：hiki
@@ -44,8 +48,13 @@ public class PhotosServiceImpl implements PhotosService {
      * @return
      */
     @Override
-    public List<Photos> getPhotoListByAcid(int acid) {
-        return photosRepository.findAllByAcid(acid);
+    public List<PhotoShowVO> getPhotoListByAcid(int acid) {
+        List<Photos> list = photosRepository.findAllByAcidOrderByTimeDesc(acid);
+        List<PhotoShowVO> theList = new ArrayList<>();
+        for(Photos photos : list){
+            theList.add(this.photosToShowVO(photos));
+        }
+        return theList;
     }
 
     /**
@@ -69,7 +78,29 @@ public class PhotosServiceImpl implements PhotosService {
      * @return
      */
     @Override
-    public Photos getPhotoByPid(int pid) {
-        return photosRepository.findByPid(pid);
+    public PhotoShowVO getPhotoByPid(int pid) {
+        Photos photos = photosRepository.findByPid(pid);
+        if( photos == null ){
+            return null;
+        }
+        return this.photosToShowVO(photos);
+    }
+
+    /**
+     * 将Photos转换成PhotosShowVO
+     * @param photos
+     * @return
+     */
+    private PhotoShowVO photosToShowVO(Photos photos){
+        PhotoShowVO photoShowVO = new PhotoShowVO();
+        photoShowVO.setPid(photos.getPid());
+        photoShowVO.setAcid(photos.getAcid());
+        photoShowVO.setDescription(photos.getDescription());
+        photoShowVO.setLink(photos.getLink());
+        photoShowVO.setStatus(photos.getStatus());
+        photoShowVO.setTime(TimeUtil.TimeToStr(photos.getTime()));
+        photoShowVO.setCreated(TimeUtil.TimeToStr(photos.getCreated()));
+
+        return photoShowVO;
     }
 }

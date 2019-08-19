@@ -41,6 +41,7 @@ public class AuthController {
             return ResultUtil.code_error();
         }
 
+        //检查是否重复登录
         Object uid = request.getSession().getAttribute("uid");
         if( uid !=null && (int)uid > 0 ){
             return ResultUtil.login_repeat();
@@ -63,24 +64,6 @@ public class AuthController {
         }catch (Exception e){
             return ResultUtil.login_error();
         }
-
-        return ResultUtil.success_return("");
-    }
-
-    /**
-     * 注册
-     * @param username
-     * @param password
-     * @param name
-     * @return
-     */
-    @PostMapping("/register")
-    public ResultVO register(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("name") String name){
-        Users user = authService.getUserByUsername(username);
-        if( user != null ){
-            return ResultUtil.username_exist();
-        }
-        authService.register(username, password, name);
 
         return ResultUtil.success_return("");
     }

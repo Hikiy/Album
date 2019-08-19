@@ -11,7 +11,7 @@ import java.util.List;
  * 2019/8/7 10:33
  */
 public interface PhotosRepository extends JpaRepository<Photos, Integer> {
-    public List<Photos> findAllByAcid(int acid);
+    public List<Photos> findAllByAcidOrderByTimeDesc(int acid);
 
     public Photos findByPid(int pid);
 

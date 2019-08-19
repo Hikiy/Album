@@ -9,12 +9,21 @@
 </head>
 <body class="theme-dark">
 <header class="bar bar-nav">
-    <button class="button pull-left" onclick="javascript:history.back(-1);">
-        返回
+    <button class="button pull-left" onclick="javascript:window.location.href='/album/index';">
+        相册
+    </button>
+    <button class="button pull-left" onclick="javascript:window.location.href='/admin/upload';">
+        新增图片
+    </button>
+    <button class="button pull-right" onclick="javascript:window.location.href='/admin/albumedit';">
+        新增相册
+    </button>
+    <button class="button pull-right" onclick="javascript:window.location.href='/admin/albumcategoryedit';">
+        新增分类
     </button>
     <h1 class='title'>相册管理</h1>
 </header>
-<div class="content-block-title">相册列表</div>
+<div class="content-block-title"><span>相册列表</span><a href="">编辑</a><a href="">新增分类</a></div>
 <div class="content" id = "content">
     <div class="content-block-title">相册名</div>
     <div class="card">

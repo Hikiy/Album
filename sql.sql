@@ -27,7 +27,7 @@ create table `photos`(
     `description` varchar(20) not null comment '照片描述',
     `link` varchar(100) not null comment '照片地址',
     `status` tinyint(4) unsigned default 1 comment '照片状态:0禁用 1正常 2私有',
-    `time` varchar(15) not null comment '照片时间',
+    `time` int(11) not null comment '照片时间',
 	`created` int(11) unsigned not null comment '创建时间',
     INDEX acid_index (`acid`)  
 );
@@ -42,4 +42,6 @@ create table `users`(
     `created` int(11) unsigned not null comment '创建时间',
     `updated` int(11) unsigned not null comment '最后更新时间',
     INDEX username_index (`username`(30))  
-)
+);
+
+insert into `users` (`username`, `name`, `pass_salt`, `pass_hash`, `status`, `created`, `updated`) VALUES ('hiki', 'Hiki', 'LCHmIT5k7iKxav2l', '9284e5211b6d77286b7d6e1a45f58cac3f3a9ed9427706453d8daafa7318dc0e', '1', '1566199160', '1566199160');

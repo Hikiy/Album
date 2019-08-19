@@ -30,7 +30,7 @@ public class Photos implements Serializable {
     private int status;
 
     @Column(nullable = false)
-    private String time;
+    private int time;
 
     @Column(nullable = false)
     private int created;

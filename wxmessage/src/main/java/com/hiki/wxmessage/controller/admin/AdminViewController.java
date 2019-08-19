@@ -35,4 +35,9 @@ public class AdminViewController {
     public String albumcategorymanagement(){
         return "album_category_management";
     }
+
+    @GetMapping("/register")
+    public String register(){
+        return "register";
+    }
 }

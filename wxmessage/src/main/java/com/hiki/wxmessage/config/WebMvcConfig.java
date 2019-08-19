@@ -21,8 +21,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // addPathPatterns - 用于添加拦截规则
         // excludePathPatterns - 用户排除拦截
 
-//        registry.addInterceptor(new LoginInterceptor())
-//                .addPathPatterns("/admin/**");
+        registry.addInterceptor(new LoginInterceptor())
+                .addPathPatterns("/admin/**");
 
 //                .excludePathPatterns("/index.html", "/", "/user/login");
     }

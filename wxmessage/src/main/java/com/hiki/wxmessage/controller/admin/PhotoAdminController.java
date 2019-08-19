@@ -1,6 +1,7 @@
 package com.hiki.wxmessage.controller.admin;
 
 import com.hiki.wxmessage.entity.Photos;
+import com.hiki.wxmessage.resultVO.PhotoShowVO;
 import com.hiki.wxmessage.resultVO.ResultVO;
 import com.hiki.wxmessage.service.OSSService;
 import com.hiki.wxmessage.service.PhotosService;
@@ -26,7 +27,7 @@ public class PhotoAdminController {
 
     @PostMapping("/deletebypid")
     public ResultVO removePhotoBypid(@RequestParam("pid") int pid){
-        Photos photo = photosService.getPhotoByPid(pid);
+        PhotoShowVO photo = photosService.getPhotoByPid(pid);
         if( photo == null ){
             return ResultUtil.db_error();
         }

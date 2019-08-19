@@ -9,9 +9,12 @@ import com.hiki.wxmessage.service.AlbumsService;
 import com.hiki.wxmessage.service.OSSService;
 import com.hiki.wxmessage.service.PhotosService;
 import com.hiki.wxmessage.util.ResultUtil;
+import com.hiki.wxmessage.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author ：hiki
@@ -78,7 +81,7 @@ public class ImageAdminController {
             photo.setAcid(acid);
             photo.setDescription(description);
             photo.setLink(result.getData().toString());
-            photo.setTime(time);
+            photo.setTime(TimeUtil.strToTime(time));
             Boolean success = photosService.addPhoto(photo);
 
             if( !success ){

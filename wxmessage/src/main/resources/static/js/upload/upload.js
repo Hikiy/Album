@@ -3,7 +3,11 @@ $(function() {
     var uploadPhotoUrl = '/admin/image/uploadphoto';
     var albumUrl = '/album/getalbumlist';
 
+    $.ajaxSettings.async = false;
     getAlbum();
+    var aid = $('#album').find("option:checked").attr("id");
+    getCategory(aid);
+    $.ajaxSettings.async = true;
 
     function getAlbum() {
         $

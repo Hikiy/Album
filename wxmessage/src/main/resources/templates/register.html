@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>登录</title>
+    <title>注册</title>
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
     <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
@@ -12,11 +12,22 @@
     <button class="button pull-left" onclick="javascript:history.back(-1);">
         返回
     </button>
-    <h1 class='title'>登录</h1>
+    <h1 class='title'>注册</h1>
 </header>
 <div class="content">
     <div class="list-block">
         <ul>
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-email"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">昵称</div>
+                        <div class="item-input">
+                            <input type="email" placeholder="输入用户名" id="name">
+                        </div>
+                    </div>
+                </div>
+            </li>
             <li>
                 <div class="item-content">
                     <div class="item-media"><i class="icon icon-form-email"></i></div>
@@ -35,6 +46,17 @@
                         <div class="item-title label">密码</div>
                         <div class="item-input">
                             <input type="password" placeholder="输入密码" id="password">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-email"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">重复密码</div>
+                        <div class="item-input">
+                            <input type="password" placeholder="重复输入密码" id="password2">
                         </div>
                     </div>
                 </div>
@@ -68,6 +90,6 @@
 </div>
 
 <script type='text/javascript'
-        src='../../js/auth/login.js'></script>
+        src='../../js/auth/register.js'></script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 $(function() {
     var photoUrl = '/album/getphotolistbyacid?acid=';
     var imageUrl = '/image/showimage?filename=';
+    var albumCategoryEditUrl = '/admin/albumcategoryedit?acid=';
 
     var acid = getQueryVariable("acid");
     if( acid == null || acid == '' || acid < 1){
@@ -38,29 +39,12 @@ $(function() {
                 });
     }
 
-    // function deletebypid(pid) {
-    //     if(window.confirm('确定删除？')){
-    //         var formData = new FormData();
-    //         formData.append('pid', pid);
-    //
-    //         $.ajax({
-    //             url : deletUrl,
-    //             type : 'POST',
-    //             data : formData,
-    //             contentType : false,
-    //             processData : false,
-    //             cache : false,
-    //             success : function(data) {
-    //                 if (data.ret == 0) {
-    //                     $.toast('删除成功！');
-    //                 } else {
-    //                     $.toast('删除失败！');
-    //                 }
-    //                 getList();
-    //             }
-    //         });
-    //     }
-    // }
+    $('#edit').click(
+        function() {
+            window.location.href=albumCategoryEditUrl + acid;
+        }
+    );
+
     function getQueryVariable(variable)
     {
         var query = window.location.search.substring(1);

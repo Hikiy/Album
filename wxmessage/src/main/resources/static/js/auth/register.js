@@ -1,22 +1,31 @@
 $(function() {
-    var loginUrl = '/auth/login';
-    var managementUrl = '/admin/albumcategorymanagement';
+    var registerUrl = '/admin/auth/register';
+    var loginUrl = '/auth/loginindex';
 
     getVerify();
 
     $('#submit').click(
         function() {
+            var name = $('#name').val();
             var username = $('#username').val();
             var password = $('#password').val();
+            var password2 = $('#password2').val();
             var code = $('#code').val();
+
+            if( password != password2){
+                $.toast('两次输入密码不一致！');
+                return;
+            }
+
             //创建表单对象，用于传递给后端
             var formData = new FormData();
+            formData.append('name', name);
             formData.append('username', username);
             formData.append('password', password);
             formData.append('code', code);
 
             $.ajax({
-                url : loginUrl,
+                url : registerUrl,
                 type : 'POST',
                 data : formData,
                 contentType : false,
@@ -24,14 +33,12 @@ $(function() {
                 cache : false,
                 success : function(data) {
                     if (data.ret == 0) {
-                        $.toast('登录成功！跳转页面');
-                        setTimeout(function(){ window.location.href=managementUrl;}, 1000);
+                        $.toast('注册成功！跳转登录');
+                        setTimeout(function(){ window.location.href=loginUrl;}, 3000);
                     }else if(data.ret == -10){
                         $.toast('验证码错误！');
-                    }else if(data.ret == -6){
-                        $.toast('账号或密码错误！');
-                    }else if(data.ret == -9){
-                        $.toast('请勿重复登录！');
+                    }else if(data.ret == -7){
+                        $.toast('账号已存在！');
                     }else {
                         $.toast('服务器错误！');
                     }
