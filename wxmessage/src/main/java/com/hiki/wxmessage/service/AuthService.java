@@ -2,6 +2,8 @@ package com.hiki.wxmessage.service;
 
 import com.hiki.wxmessage.entity.Users;
 
+import java.util.List;
+
 /**
  * @author ：hiki
  * 2019/8/16 16:27
@@ -33,4 +35,28 @@ public interface AuthService {
      * @return
      */
     public Boolean register(String username, String password, String name);
+
+    /**
+     * 删除用户
+     * @param uid
+     * @return
+     */
+    public Boolean deleteByUid(int uid);
+
+    /**
+     * 通过uid获取用户信息
+     * @param uid
+     * @return
+     */
+    public Users getUserByUid(int uid);
+
+    public List<Users> getUsersList();
+
+    /**
+     * 修改密码
+     * @param uid
+     * @param newPassword
+     * @return
+     */
+    public Boolean updatePassword(int uid, String oldPassword, String newPassword);
 }

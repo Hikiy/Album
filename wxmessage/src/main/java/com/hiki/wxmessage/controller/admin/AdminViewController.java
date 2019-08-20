@@ -40,4 +40,19 @@ public class AdminViewController {
     public String register(){
         return "register";
     }
+
+    @GetMapping("/authupdatepassword")
+    public String authupdatepassword(){
+        return "auth_update_password";
+    }
+
+    @GetMapping("/authmanagement")
+    public String authmanagement(){
+        return "auth_management";
+    }
+
+    @GetMapping("/management")
+    public String management(){
+        return "management";
+    }
 }

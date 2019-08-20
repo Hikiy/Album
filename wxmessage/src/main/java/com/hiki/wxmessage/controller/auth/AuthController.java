@@ -67,23 +67,4 @@ public class AuthController {
 
         return ResultUtil.success_return("");
     }
-
-    /**
-     * 登出
-     * @param request
-     * @return
-     */
-    @PostMapping("/logout")
-    public ResultVO logout(HttpServletRequest request){
-        Object object = request.getSession().getAttribute("uid");
-        if( object == null){
-            return ResultUtil.illegal_option();
-        }
-        int uid = Integer.valueOf(request.getSession().getAttribute("uid").toString());
-        if( uid < 1 ){
-            return  ResultUtil.illegal_option();
-        }
-        request.getSession().setAttribute("uid",-1);
-        return ResultUtil.success_return("");
-    }
 }

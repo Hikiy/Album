@@ -4,10 +4,12 @@ import com.hiki.wxmessage.entity.Users;
 import com.hiki.wxmessage.repository.UsersRepository;
 import com.hiki.wxmessage.service.AuthService;
 import com.hiki.wxmessage.util.PasswordUtil;
+import org.bouncycastle.pqc.crypto.newhope.NHOtherInfoGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ：hiki
@@ -68,6 +70,72 @@ public class AuthServiceImpl implements AuthService {
         user.setPassHash(passHash);
         user.setStatus(1);
         user.setCreated(time);
+        user.setUpdated(time);
+
+        try {
+            usersRepository.save(user);
+        }catch (Exception e){
+            return false;
+        }
+
+        if(user.getUid() < 1){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 删除用户
+     * @param uid
+     * @return
+     */
+    @Override
+    public Boolean deleteByUid(int uid) {
+        try{
+            usersRepository.deleteByUid(uid);
+        }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 通过uid获取用户信息
+     * @param uid
+     * @return
+     */
+    @Override
+    public Users getUserByUid(int uid) {
+        return usersRepository.findByUid(uid);
+    }
+
+    @Override
+    public List<Users> getUsersList() {
+        return usersRepository.findAll();
+    }
+
+    /**
+     * 修改密码
+     * @param uid
+     * @param newPassword
+     * @return
+     */
+    @Override
+    public Boolean updatePassword(int uid, String oldPassword, String newPassword) {
+        //检查旧密码是否正确
+        Users user = usersRepository.findByUid(uid);
+        String thePassHash = PasswordUtil.getPassHash(user.getUsername(), oldPassword, user.getCreated(), user.getPassSalt());
+        if( !thePassHash.equals(user.getPassHash()) ){
+            return false;
+        }
+
+        //生成新hash
+        String passSalt = PasswordUtil.getPassSalt();
+        String passHash = PasswordUtil.getPassHash(user.getUsername(), newPassword, user.getCreated(), passSalt);
+        int time = (int)(new Date().getTime()/1000);
+
+        user.setPassSalt(passSalt);
+        user.setPassHash(passHash);
         user.setUpdated(time);
 
         try {

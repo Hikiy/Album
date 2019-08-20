@@ -95,7 +95,7 @@ public class OSSServiceImpl implements OSSService {
      */
     @Override
     public ResultVO uploadMultipartFile(MultipartFile file, String filename) {
-        filename = "blog/" + filename;
+        filename = "album/" + filename;
         InputStream fileStream;
 
         OSS ossClient = this.getOSSClient();

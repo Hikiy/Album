@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>账号管理</title>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+</head>
+<body class="theme-dark">
+<header class="bar bar-nav">
+    <button class="button pull-left" onclick="javascript:history.back(-1);">
+        返回
+    </button>
+    <button class="button pull-left" onclick="javascript:window.location.href='/admin/register';">
+        新增账号
+    </button>
+    <h1 class='title'>账号管理</h1>
+</header>
+<div class="content" id = "content">
+        <div class="card">
+            <div class="card-content">
+                <div class="list-block media-list">
+                    <ul>
+                        <li class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title-row">
+                                    <div class="item-title">用户名</div>
+                                </div>
+                                <div class="item-subtitle">昵称</div>
+                                <div class="card-footer no-border">
+                                    <a href="#"
+                                       class="item-link list-button">编辑</a>
+                                    <a href="#" class="link">删除</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+</div>
+
+<script type='text/javascript'
+        src='../../js/auth/auth_management.js'></script>
+<script type='text/javascript'>
+    var deletUrl = '/admin/auth/deletebyuid';
+    function deletebyuid(uid) {
+        if(window.confirm('确定删除？')){
+            var formData = new FormData();
+            formData.append('uid', uid);
+
+            $.ajax({
+                url : deletUrl,
+                type : 'POST',
+                data : formData,
+                contentType : false,
+                processData : false,
+                cache : false,
+                success : function(data) {
+                    if (data.ret == 0) {
+                        $.toast('删除成功！');
+                    } else {
+                        $.toast('删除失败！');
+                    }
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 $(function() {
     var loginUrl = '/auth/login';
-    var managementUrl = '/admin/albumcategorymanagement';
+    var managementUrl = '/admin/management';
 
     getVerify();
 
