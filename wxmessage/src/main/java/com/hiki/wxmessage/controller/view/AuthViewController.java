@@ -18,7 +18,7 @@ public class AuthViewController {
         //检查是否重复登录
         Object uid = request.getSession().getAttribute("uid");
         if( uid !=null && (int)uid > 0 ){
-            return "redirect:/admin/albumcategorymanagement";
+            return "redirect:/admin/management";
         }
         return "login";
     }

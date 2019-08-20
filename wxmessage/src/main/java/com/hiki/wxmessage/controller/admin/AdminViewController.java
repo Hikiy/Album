@@ -55,4 +55,9 @@ public class AdminViewController {
     public String management(){
         return "management";
     }
+
+    @GetMapping("/albummanagement")
+    public String albummanagement(){
+        return "album_management";
+    }
 }

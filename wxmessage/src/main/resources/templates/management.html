@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>管理界面</title>
@@ -9,7 +10,7 @@
 </head>
 <body class="theme-dark">
 <header class="bar bar-nav">
-    <button class="button pull-left" onclick="javascript:window.location.href='/album/index';">
+    <button class="button pull-left" onclick="javascript:window.location.href='/admin/albummanagement';">
         相册
     </button>
     <button class="button pull-right" onclick="javascript:window.location.href='/admin/auth/logout';">
@@ -50,6 +51,7 @@
             </div>
         </div>
     </div>
+    <!-- 请勿删除，保留源，谢谢 --><div style="width:100%; position:fixed; left:0; bottom:0;" th:include="@{/footer} :: companyInfo" th:with="data='UI: SUI MOBILE'"/><!-- 请勿删除，保留源，谢谢 -->
 </div>
 </body>
 </html>
