@@ -62,3 +62,4 @@
 
 实现账号管理模块，基本完工
 
+将相册项目从spring cloud转为spring boot

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理界面</title>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+</head>
+<body class="theme-dark">
+<header class="bar bar-nav">
+    <button class="button pull-left" onclick="javascript:window.location.href='/admin/albummanagement';">
+        相册
+    </button>
+    <button class="button pull-right" onclick="javascript:window.location.href='/admin/auth/logout';">
+        登出
+    </button>
+    <h1 class='title'>管理界面</h1>
+</header>
+<div class="content">
+    <div class="card">
+        <div class="card-content">
+            <div class="list-block">
+                <ul>
+                    <li>
+                        <a href="/admin/albumcategorymanagement" class="item-link item-content">
+                            <div class="item-media"><i class="icon icon-f7"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title" >相册管理</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <div class="list-block">
+                <ul>
+                    <li>
+                        <a href="/admin/authmanagement" class="item-link item-content">
+                            <div class="item-media"><i class="icon icon-f7"></i></div>
+                            <div class="item-inner">
+                                <div class="item-title" >账号管理</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 请勿删除，保留源，谢谢 --><div style="width:100%; position:fixed; left:0; bottom:0;" th:include="@{/footer} :: companyInfo" th:with="data='UI: SUI MOBILE'"/><!-- 请勿删除，保留源，谢谢 -->
+</div>
+</body>
+</html>

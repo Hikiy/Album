@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>相册分类编辑</title>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+</head>
+<body class="theme-dark">
+<header class="bar bar-nav">
+    <button class="button pull-left" onclick="javascript:history.back(-1);">
+        返回
+    </button>
+    <h1 class='title'>相册分类编辑</h1>
+</header>
+<div class="content">
+    <div class="list-block">
+        <ul>
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-gender"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">相册</div>
+                        <div class="item-input">
+                            <select id="album">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-email"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">分类名称</div>
+                        <div class="item-input">
+                            <input type="email" placeholder="分类名称" id="name">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-email"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">分类code</div>
+                        <div class="item-input">
+                            <input type="email" placeholder="分类code 用于存储照片的文件夹名，建议使用英文，不可再修改!" id="code">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-email"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">优先级</div>
+                        <div class="item-input">
+                            <input type="email" placeholder="分类优先级 越大在相册显示越靠前" id="priority">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item-content">
+                    <div class="item-media">
+                        <i class="icon icon-form-email"></i>
+                    </div>
+                    <div class="item-inner">
+                        <div class="item-title label">横幅</div>
+                        <div class="item-input">
+                            <input type="file" id="file">
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="content-block">
+        <div class="row">
+            <div class="col-50"><a href="#" class="button button-big button-fill button-danger"
+                                   onclick="javascript:history.back(-1);">取消</a></div>
+            <div class="col-50"><a href="#" class="button button-big button-fill button-success.theme-dark" id="submit">确认</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript'
+        src='../../js/album/album_category_edit.js'></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>相册编辑</title>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+</head>
+<body class="theme-dark">
+<header class="bar bar-nav">
+    <button class="button pull-left" onclick="javascript:history.back(-1);">
+        返回
+    </button>
+    <h1 class='title'>相册编辑</h1>
+</header>
+<div class="content">
+    <div class="list-block">
+        <ul>
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-email"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">相册名称</div>
+                        <div class="item-input">
+                            <input type="email" placeholder="相册名称" id="name">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-email"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">相册code</div>
+                        <div class="item-input">
+                            <input type="email" placeholder="使用英文 用于存储照片的文件夹名" id="code">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item-content">
+                    <div class="item-media">
+                        <i class="icon icon-form-email"></i>
+                    </div>
+                    <div class="item-inner">
+                        <div class="item-title label">相册banner</div>
+                        <div class="item-input">
+                            <input type="file" id="file">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!--            <li>-->
+            <!--                <div class="item-content">-->
+            <!--                    <div class="item-media"><i class="icon icon-form-toggle"></i></div>-->
+            <!--                    <div class="item-inner">-->
+            <!--                        <div class="item-title label">开关</div>-->
+            <!--                        <div class="item-input">-->
+            <!--                            <label class="label-switch">-->
+            <!--                                <input type="checkbox">-->
+            <!--                                <div class="checkbox"></div>-->
+            <!--                            </label>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </li>-->
+            <!--            <li class="align-top">-->
+            <!--                <div class="item-content">-->
+            <!--                    <div class="item-media"><i class="icon icon-form-comment"></i></div>-->
+            <!--                    <div class="item-inner">-->
+            <!--                        <div class="item-title label">文本域</div>-->
+            <!--                        <div class="item-input">-->
+            <!--                            <textarea></textarea>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </li>-->
+        </ul>
+    </div>
+    <div class="content-block">
+        <div class="row">
+            <div class="col-50"><a href="#" class="button button-big button-fill button-danger"
+                                   onclick="javascript:history.back(-1);">取消</a></div>
+            <div class="col-50"><a href="#" class="button button-big button-fill button-success.theme-dark" id="submit">上传</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript'
+        src='../../js/album/album_edit.js'></script>
+</body>
+</html>
