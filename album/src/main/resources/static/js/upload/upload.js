@@ -62,6 +62,7 @@ $(function() {
 
     $('#submit').click(
         function() {
+            $.ajaxSettings.async = false;
             var acid = $('#category').find("option:checked").attr("id");
             var description = $('#description').val();
             var time = $('#time').val();
@@ -72,7 +73,6 @@ $(function() {
             formData.append('acid', acid);
             formData.append('description', description);
             formData.append('time', time);
-
             $.ajax({
                 url : uploadPhotoUrl,
                 type : 'POST',
@@ -88,6 +88,8 @@ $(function() {
                     }
                 }
             });
+            document.getElementById("file").value='';
+            document.getElementById("description").value='';
+            $.ajaxSettings.async = true;
         });
-
 });
