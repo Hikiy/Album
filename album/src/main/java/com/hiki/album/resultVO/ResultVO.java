@@ -1,5 +1,6 @@
 package com.hiki.album.resultVO;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
@@ -7,6 +8,7 @@ import lombok.Data;
  * 2019/8/7 14:14
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResultVO<T> {
     /**
      * 返回码
