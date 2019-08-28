@@ -23,7 +23,10 @@
 
 ## <a name="3">预览</a>:pig:
 ### PC端首页
-![image](https://github.com/Hikiy/Album/tree/master/gif/index.gif)
+
+<image src="./gif/index.gif" width="840px"/> 
+
+
 本地默认进入url：http://localhost:8012/album/index
 
 #### 主要功能
@@ -42,12 +45,15 @@
   </br>
 
 ### 移动端首页
-![image](https://github.com/Hikiy/Album/tree/master/gif/index2.gif)
+
+<image src="./gif/index2.gif" width="420px"/> 
+
   </br>
 
   </br>
 ### 后台
-![image](https://github.com/Hikiy/Album/tree/master/gif/manage1.gif)
+
+<image src="./gif/manage1.gif" width="420px"/> 
 
 本地默认登录url：http://localhost:8012/auth/loginindex
 
