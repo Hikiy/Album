@@ -8,7 +8,8 @@
 </br>
 </br>
 </br>
-## <a name="1">功能</a>:star2:
+
+## <a name="1"> 功能</a>:star2:
 
 - 拥有自己的照片博客:satisfied::camera:
 - 登录后台，轻松管理照片、多相册 :clap:
@@ -22,7 +23,7 @@
 
 ## <a name="3">预览</a>:pig:
 ### PC端首页
-![index](https://github.com/Hikiy/Album/tree/master/README_GIF/index.gif)
+![image](https://github.com/Hikiy/Album/tree/master/README_GIF/index.gif)
 本地默认进入url：http://localhost:8012/album/index
 
 #### 主要功能
@@ -41,12 +42,12 @@
   </br>
 
 ### 移动端首页
-![index](https://github.com/Hikiy/Album/tree/master/README_GIF/index2.gif)
+![image](https://github.com/Hikiy/Album/tree/master/README_GIF/index2.gif)
   </br>
 
   </br>
 ### 后台
-![index](https://github.com/Hikiy/Album/tree/master/README_GIF/manage1.gif)
+![image](https://github.com/Hikiy/Album/tree/master/README_GIF/manage1.gif)
 
 本地默认登录url：http://localhost:8012/auth/loginindex
 
