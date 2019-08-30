@@ -15,10 +15,10 @@
 - 登录后台，轻松管理照片、多相册 :clap:
 
 ## <a name="2"> 技术栈</a>:wrench:
-- java
-- Spring Boot
+- java 1.8
+- Spring Boot 2.1.7
 - JavaScript
-- MySQL
+- MySQL 5.7
 - HTML
 
 ## <a name="3">预览</a>:pig:
