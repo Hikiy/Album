@@ -3,6 +3,7 @@ package com.hiki.album.repository;
 import com.hiki.album.entity.AlbumCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,4 +21,7 @@ public interface AlbumCategoryRepository extends JpaRepository<AlbumCategory, In
 
     AlbumCategory findByAcid(Integer acid);
     List<AlbumCategory> findByCode(String name);
+
+    @Transactional
+    void deleteByAcid(int acid);
 }

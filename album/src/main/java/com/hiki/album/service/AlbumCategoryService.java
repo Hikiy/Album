@@ -22,4 +22,6 @@ public interface AlbumCategoryService {
     public List<AlbumCategory> getAlbumCategoryListByAid(int aid);
 
     public Boolean updateAlbumCategoryByAcid(int acid, int aid, String name, String code, int priority, String banner);
+
+    public Boolean deleteAlbumCategoryByAcid(int acid);
 }

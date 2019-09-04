@@ -18,7 +18,7 @@ $(function() {
                         var albumHtml = '';
                         albumlist
                             .map(function(item, index) {
-                                albumHtml += '<div class="content-block-title"><span>' + item.name + '</span><a href="' + albumInfoUrl + item.aid + '">  编辑</a></div>\n'
+                                albumHtml += '<div class="content-block-title"><span>' + item.name + '</span><a href="' + albumInfoUrl + item.aid + '">  编辑</a><a href="javascript:void(0)" onclick="deletebyaid('+ item.aid +')">  删除</a></div>\n'
                                 + getCategoryList(item.aid);
                             });
                         $('#content').html(albumHtml);

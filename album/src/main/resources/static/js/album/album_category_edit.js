@@ -9,7 +9,7 @@ $(function() {
     $.ajaxSettings.async = false;
     getAlbum();
     $.ajaxSettings.async = true;
-    if( acid != null && acid != "" && acid > 0){
+    if( acid != false && acid != null && acid != "" && acid > 0){
         isEdit = true;
         $('#code').attr('disabled',true);
         getAlbumCategory(acid);
@@ -97,6 +97,16 @@ $(function() {
                 }
             });
         });
+
+    $('#back').click(
+        function() {
+            if( acid == false || acid == null || acid == "" || acid <= 0 ){
+                window.location.href='/admin/albumcategorymanagement';
+                return;
+            }
+            window.location.href='/admin/photosmanagement?acid='+ acid;
+        }
+    );
 
     function getQueryVariable(variable)
     {

@@ -39,7 +39,7 @@ $(function() {
                                     '<div class="description description--preview"></div>' +
                                     '</div>';
                             });
-                        $('#content').html(bannerHtml);
+                        $('#content').append(bannerHtml);
                     }
                 });
     }
@@ -71,6 +71,13 @@ $(function() {
                     if (data.ret == 0) {
                         var album = data.data;
                         document.title = album.name;
+                        var albumBannerHtml = '<div class="grid__item" style="width: 100%" data-size="1x1" align="center" ><a class="img-wrap"><img src="'
+                            + showimageUrl + '?filename=' + album.banner +
+                            '" />'
+                            + '<div class="description description--grid"></div>'
+                            + '</div>'
+                            + '</a> </div>';
+                        $('#content').append(albumBannerHtml);
                     }
                 });
     }

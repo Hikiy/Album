@@ -9,7 +9,7 @@
 </head>
 <body class="theme-dark">
 <header class="bar bar-nav">
-    <button class="button pull-left" onclick="javascript:history.back(-1);">
+    <button class="button pull-left" onclick="javascript:window.location.href='/admin/management';">
         返回
     </button>
     <button class="button pull-left" onclick="javascript:window.location.href='/admin/upload';">
@@ -47,4 +47,30 @@
 <script type='text/javascript'
         src='../../js/albumCategory/album_category_management.js'></script>
 </body>
+<script type='text/javascript'>
+    var deletUrl = '/admin/album/deletealbumbyaid';
+    function deletebyaid(aid) {
+        if(window.confirm('确定删除？该相册下的所有照片将被删除！')){
+            var formData = new FormData();
+            formData.append('aid', aid);
+
+            $.ajax({
+                url : deletUrl,
+                type : 'POST',
+                data : formData,
+                contentType : false,
+                processData : false,
+                cache : false,
+                success : function(data) {
+                    if (data.ret == 0) {
+                        $.toast('删除成功！');
+                        setTimeout(function(){ window.location.href='/admin/albumcategorymanagement';}, 1000);
+                    } else {
+                        $.toast('删除失败！');
+                    }
+                }
+            });
+        }
+    }
+</script>
 </html>

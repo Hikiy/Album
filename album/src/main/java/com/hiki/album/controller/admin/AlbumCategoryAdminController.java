@@ -115,4 +115,19 @@ public class AlbumCategoryAdminController {
 
         return ResultUtil.success_return("");
     }
+
+    /**
+     * 删除相册分类以及分类下的所有照片
+     * @param acid
+     * @return
+     */
+    @PostMapping("/deletealbumcategorybyacid")
+    public ResultVO deleteAlbumCategoryByAcid(@RequestParam("acid") int acid){
+        Boolean success = albumCategoryService.deleteAlbumCategoryByAcid(acid);
+        if( success ){
+            return ResultUtil.success_return("");
+        }else{
+            return ResultUtil.db_error();
+        }
+    }
 }

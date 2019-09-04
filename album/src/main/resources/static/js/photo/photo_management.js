@@ -2,6 +2,8 @@ $(function() {
     var photoUrl = '/album/getphotolistbyacid?acid=';
     var imageUrl = '/image/showimage?filename=';
     var albumCategoryEditUrl = '/admin/albumcategoryedit?acid=';
+    var deleteCategoryUrl = '/admin/albumcategory/deletealbumcategorybyacid';
+    var backUrl = '/admin/albumcategorymanagement';
 
     var acid = getQueryVariable("acid");
     if( acid == null || acid == '' || acid < 1){
@@ -42,6 +44,34 @@ $(function() {
     $('#edit').click(
         function() {
             window.location.href=albumCategoryEditUrl + acid;
+        }
+    );
+    $('#delete').click(
+        function() {
+            if(window.confirm('确定删除分类？该分类下的照片会一并删除！')){
+                $.showPreloader();
+                var formData = new FormData();
+                formData.append('acid', acid);
+
+                $.ajax({
+                    url : deleteCategoryUrl,
+                    type : 'POST',
+                    data : formData,
+                    contentType : false,
+                    processData : false,
+                    cache : false,
+                    success : function(data) {
+                        if (data.ret == 0) {
+                            $.toast('删除成功！');
+                            setTimeout(function(){ window.location.href=backUrl;}, 1000);
+                            $.hidePreloader();
+                        } else {
+                            $.toast('删除失败！');
+                            $.hidePreloader();
+                        }
+                    }
+                });
+            }
         }
     );
 

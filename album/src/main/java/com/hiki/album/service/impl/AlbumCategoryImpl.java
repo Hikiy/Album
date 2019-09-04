@@ -1,9 +1,14 @@
 package com.hiki.album.service.impl;
 
 import com.hiki.album.entity.AlbumCategory;
+import com.hiki.album.entity.Photos;
 import com.hiki.album.repository.AlbumCategoryRepository;
+import com.hiki.album.repository.PhotosRepository;
 import com.hiki.album.resultVO.AlbumBannerVO;
+import com.hiki.album.resultVO.ResultVO;
 import com.hiki.album.service.AlbumCategoryService;
+import com.hiki.album.service.OSSService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +21,14 @@ import java.util.List;
  * 2019/8/6 11:03
  */
 @Service
+@Slf4j
 public class AlbumCategoryImpl implements AlbumCategoryService {
     @Autowired
     private AlbumCategoryRepository albumCategoryRepository;
+    @Autowired
+    private PhotosRepository photosRepository;
+    @Autowired
+    private OSSService ossService;
 
     @Override
     public List<AlbumCategory> getAlbumCategoryList() {
@@ -104,6 +114,40 @@ public class AlbumCategoryImpl implements AlbumCategoryService {
         try{
             albumCategoryRepository.save(albumCategory);
         }catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 删除相册分类以及分类下的所有照片
+     * @param acid
+     * @return
+     */
+    @Override
+    public Boolean deleteAlbumCategoryByAcid(int acid) {
+        try{
+            List<Photos> photos= photosRepository.findAllByAcidOrderByTimeDesc(acid);
+
+            for(Photos photo:photos){
+                ResultVO pR = ossService.deleteFile(photo.getLink());
+                if( pR.getRet() != 0 ){
+                    log.error("删除分类时，删除照片失败！pid为" + photo.getPid());
+                    return false;
+                }
+                photosRepository.deleteByPid(photo.getPid());
+            }
+
+            AlbumCategory albumCategory = albumCategoryRepository.findByAcid(acid);
+            ResultVO result = ossService.deleteFile(albumCategory.getBanner());
+            if( result.getRet() == 0 ){
+                albumCategoryRepository.deleteByAcid(acid);
+            }else{
+                log.error("删除相册分类失败！acid为" + acid);
+                return false;
+            }
+        }catch(Exception e){
+            log.error("删除相册分类失败！acid为" + acid);
             return false;
         }
         return true;

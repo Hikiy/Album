@@ -34,4 +34,6 @@ public interface AlbumsService {
      * @return
      */
     public Boolean updateAlbumByAid(int aid, String name, String code, String banner);
+
+    public Boolean deleteAlbumByAid(int aid);
 }

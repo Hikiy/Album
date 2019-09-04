@@ -105,4 +105,19 @@ public class AlbumAdminController {
         }
         return ResultUtil.success_return("");
     }
+
+    /**
+     * 删除相册以及其中的相册分类还有分类中的所有照片
+     * @param aid
+     * @return
+     */
+    @PostMapping("/deletealbumbyaid")
+    public ResultVO deleteAlbumByAid(@RequestParam("aid") int aid){
+        Boolean sucess = albumsService.deleteAlbumByAid(aid);
+        if( sucess ){
+            return ResultUtil.success_return("");
+        }else{
+            return ResultUtil.db_error();
+        }
+    }
 }
