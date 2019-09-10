@@ -50,7 +50,7 @@ $(function() {
 
                         var pageHtml = '<div class="pagination-bar">';
                         if( page > 1 ){
-                            pageHtml += '<a href="#" class="page-prev disabled" onclick="getTheInfo('+ (page-1) +')">&lt;</a>';
+                            pageHtml += '<a href="#" class="page-prev" onclick="getTheInfo('+ (page-1) +')">&lt;</a>';
                         }
                         var count = datas.count;
                         var pageCount = Math.ceil(count/size);
