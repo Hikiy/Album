@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author ：hiki
  * 2019/8/8 17:19
@@ -24,7 +26,15 @@ public class AlbumGetController {
     PhotosService photosService;
 
     @GetMapping("/getphotolistbyacid")
-    public ResultVO getPhotoListByAcid(@RequestParam("acid")int acid){
+    public ResultVO getPhotoListByAcid(@RequestParam("acid")int acid, HttpServletRequest request){
+        String pageObject = request.getParameter("page");
+        String sizeObject = request.getParameter("size");
+
+        if( pageObject != null && sizeObject != null){
+            int page = Integer.valueOf(pageObject);
+            int size = Integer.valueOf(sizeObject);
+            return ResultUtil.success_return(photosService.getPhotoListByAcid(acid, page, size));
+        }
         return ResultUtil.success_return(photosService.getPhotoListByAcid(acid));
     }
 

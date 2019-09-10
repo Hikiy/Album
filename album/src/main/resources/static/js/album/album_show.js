@@ -3,6 +3,7 @@ $(function() {
     var photoUrl = '/album/getphotolistbyacid?acid=';
     var showimageUrl = '/image/showimage';
     var albumInfoUrl = '/album/getalbumbyaid?aid=';
+    var albumCategoryUrl = '/album/category?acid=';
 
     var count = 0;
     var aid = getQueryVariable("aid");
@@ -25,7 +26,7 @@ $(function() {
                         var bannerHtml = '';
                         bannerlist
                             .map(function(item, index) {
-                                bannerHtml += '<div class="grid__item" style="width: 95%;padding: 30px 10px 30px 10px;" data-size="1x1" align="center" ><a class="img-wrap"><img src="'
+                                bannerHtml += '<div class="grid__item" style="width: 95%;padding: 30px 10px 30px 10px;" data-size="1x1" align="center" ><a class="img-wrap" href="' + albumCategoryUrl + item.acid + '" target="_blank"><img src="'
                                 + showimageUrl + '?filename=' + item.banner
                                     + '" />'
                                 + '<div class="description description--grid"></div>'
@@ -45,7 +46,7 @@ $(function() {
     }
     function getPhoto(acid) {
         var photoHtml = '';
-        var thephotoUrl = photoUrl + acid;
+        var thephotoUrl = photoUrl + acid +'&page=1&size=9';
         $
             .getJSON(
                 thephotoUrl,

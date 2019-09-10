@@ -21,4 +21,9 @@ public class AlbumViewController {
     public String index(){
         return "album_index";
     }
+
+    @GetMapping("/category")
+    public String category(){
+        return "album_category_index";
+    }
 }

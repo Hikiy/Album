@@ -7,6 +7,7 @@ import com.hiki.album.resultVO.PhotoShowVO;
 import com.hiki.album.service.PhotosService;
 import com.hiki.album.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -50,6 +51,16 @@ public class PhotosServiceImpl implements PhotosService {
     @Override
     public List<PhotoShowVO> getPhotoListByAcid(int acid) {
         List<Photos> list = photosRepository.findAllByAcidOrderByTimeDesc(acid);
+        List<PhotoShowVO> theList = new ArrayList<>();
+        for(Photos photos : list){
+            theList.add(this.photosToShowVO(photos));
+        }
+        return theList;
+    }
+
+    @Override
+    public List<PhotoShowVO> getPhotoListByAcid(int acid, int page, int size) {
+        List<Photos> list = photosRepository.findAllByAcidOrderByTimeDesc(acid, PageRequest.of(page-1,size));
         List<PhotoShowVO> theList = new ArrayList<>();
         for(Photos photos : list){
             theList.add(this.photosToShowVO(photos));

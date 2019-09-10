@@ -14,6 +14,8 @@ public interface PhotosService {
 
     public List<PhotoShowVO> getPhotoListByAcid(int acid);
 
+    public List<PhotoShowVO> getPhotoListByAcid(int acid, int page, int size);
+
     public Boolean deletePhotoByPid(int pid);
 
     public PhotoShowVO getPhotoByPid(int pid);
