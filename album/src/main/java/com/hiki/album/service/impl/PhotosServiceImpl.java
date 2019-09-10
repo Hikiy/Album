@@ -97,6 +97,11 @@ public class PhotosServiceImpl implements PhotosService {
         return this.photosToShowVO(photos);
     }
 
+    @Override
+    public int getPhotoCountByAcid(int acid) {
+        return (int)photosRepository.countAllByAcid(acid);
+    }
+
     /**
      * 将Photos转换成PhotosShowVO
      * @param photos

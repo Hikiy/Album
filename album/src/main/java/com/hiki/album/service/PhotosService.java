@@ -19,4 +19,6 @@ public interface PhotosService {
     public Boolean deletePhotoByPid(int pid);
 
     public PhotoShowVO getPhotoByPid(int pid);
+
+    public int getPhotoCountByAcid(int acid);
 }

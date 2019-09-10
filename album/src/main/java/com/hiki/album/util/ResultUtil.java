@@ -1,5 +1,6 @@
 package com.hiki.album.util;
 
+import com.hiki.album.resultVO.ResultPageVO;
 import com.hiki.album.resultVO.ResultVO;
 
 import java.util.HashMap;
@@ -18,6 +19,16 @@ public class ResultUtil {
         result.setRet(0);
         result.setMsg("ok");
         result.setData(data);
+        return result;
+    }
+
+    //成功返回
+    public static ResultPageVO success_return(Object data, int count){
+        ResultPageVO result = new ResultPageVO();
+        result.setRet(0);
+        result.setMsg("ok");
+        result.setData(data);
+        result.setCount(count);
         return result;
     }
 

@@ -3,11 +3,23 @@ $(function() {
     var albumCategoryInfoUrl = '/albumcategory/getcategorybyacid?acid=';
     var showimageUrl = '/image/showimage';
 
-    var count = 0;
     var acid = getQueryVariable("acid");
     if( acid == false || acid == null || acid == '' || acid < 1){
         acid = 1;
     }
+
+    var page = getQueryVariable("page");
+    if( page == false || page == null || page == '' || page < 1){
+        page = 1;
+    }
+
+    var size = getQueryVariable("size");
+    if( size == false || size == null || size == '' || size < 1){
+        size = 21;
+    }
+
+    page = Number(page);
+    size = Number(size);
 
     $.ajaxSettings.async = false;
     if( acid != false && acid != null && acid != '' && acid > 0){
@@ -18,7 +30,7 @@ $(function() {
 
     function getPhoto(acid) {
         var photoHtml = '<div class="grid">';
-        var thephotoUrl = photoUrl + acid;
+        var thephotoUrl = photoUrl + acid + '&page=' + page + '&size=' + size;
         $
             .getJSON(
                 thephotoUrl,
@@ -35,6 +47,35 @@ $(function() {
                             '<div class="description description--preview"></div>' +
                             '</div>';
                         $('#content').append(photoHtml);
+
+                        var pageHtml = '<div class="pagination-bar">';
+                        if( page > 1 ){
+                            pageHtml += '<a href="#" class="page-prev disabled" onclick="getTheInfo('+ (page-1) +')">&lt;</a>';
+                        }
+                        var count = datas.count;
+                        var pageCount = Math.ceil(count/size);
+                        console.log(pageCount);
+                        if( page > 2 ){
+                            pageHtml += '<a href="#" onclick="getTheInfo(1)">1</a>';
+                            pageHtml += '<span>...</span>';
+                        }
+                        if( page > 1 ){
+                            pageHtml += '<a href="#" onclick="getTheInfo('+ (page-1) +')">'+ (page-1) +'</a>'
+                        }
+
+                        pageHtml += '<a href="#" class="disabled">'+ page +'</a>';
+
+                        if( page+2 < pageCount ){
+                            pageHtml += '<a href="#" onclick="getTheInfo('+ (page+1) +')">'+ (page+1) +'</a>'
+                            pageHtml += '<span>...</span>';
+                        }
+
+                        if( page < pageCount ){
+                            pageHtml += '<a href="#" onclick="getTheInfo('+ pageCount +')">'+ pageCount +'</a>';
+                            pageHtml += '<a href="#" class="page-next" onclick="getTheInfo('+ (page+1) +')">&gt;</a>' +
+                                '</div>';
+                        }
+                        $('#content').append(pageHtml);
                     }
                 });
 

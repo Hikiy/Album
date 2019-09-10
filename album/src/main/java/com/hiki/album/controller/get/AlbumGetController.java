@@ -1,5 +1,6 @@
 package com.hiki.album.controller.get;
 
+import com.hiki.album.resultVO.ResultPageVO;
 import com.hiki.album.resultVO.ResultVO;
 import com.hiki.album.service.AlbumsService;
 import com.hiki.album.service.PhotosService;
@@ -26,16 +27,16 @@ public class AlbumGetController {
     PhotosService photosService;
 
     @GetMapping("/getphotolistbyacid")
-    public ResultVO getPhotoListByAcid(@RequestParam("acid")int acid, HttpServletRequest request){
+    public ResultPageVO getPhotoListByAcid(@RequestParam("acid")int acid, HttpServletRequest request){
         String pageObject = request.getParameter("page");
         String sizeObject = request.getParameter("size");
 
         if( pageObject != null && sizeObject != null){
             int page = Integer.valueOf(pageObject);
             int size = Integer.valueOf(sizeObject);
-            return ResultUtil.success_return(photosService.getPhotoListByAcid(acid, page, size));
+            return ResultUtil.success_return(photosService.getPhotoListByAcid(acid, page, size), photosService.getPhotoCountByAcid(acid));
         }
-        return ResultUtil.success_return(photosService.getPhotoListByAcid(acid));
+        return ResultUtil.success_return(photosService.getPhotoListByAcid(acid),0);
     }
 
     @GetMapping("/getalbumlist")

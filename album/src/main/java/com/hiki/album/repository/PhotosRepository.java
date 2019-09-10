@@ -19,6 +19,8 @@ public interface PhotosRepository extends JpaRepository<Photos, Integer> {
 
     public List<Photos> findAllByAcidOrderByTimeDesc(int pid, Pageable pageable);
 
+    public long countAllByAcid(int acid);
+
     @Transactional
     public void deleteByPid(int pid);
 }

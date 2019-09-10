@@ -13,4 +13,9 @@ public class ErrorViewController {
     public String authError(){
         return "auth_error";
     }
+
+    @RequestMapping("/test")
+    public String test(){
+        return "test";
+    }
 }

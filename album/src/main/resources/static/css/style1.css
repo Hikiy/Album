@@ -208,3 +208,44 @@ body{ background-color:#000000}
 	height: 0;
 	color: transparent;
 }
+
+/*页码导航栏*/
+.pagination-bar {
+	font-size: 0px;
+	padding: 20px 0px;
+	text-align: center;
+}
+
+.pagination-bar a {
+	display: inline-block;
+	padding: 5px 7.5px;
+	text-decoration: none;
+	min-width: 20px;
+	font-size: 16px;
+}
+
+.pagination-bar a:not(.disabled) {
+	background-color: #FFF;
+	color: #666;
+	border: 1px solid #BBBBBB;
+}
+
+.pagination-bar a.disabled {
+	background-color: #666;
+	color: #FFF;
+	border: 1px solid #444;
+}
+
+.page-prev {
+	border-radius: 15px 0px 0px 15px;
+}
+
+.page-next {
+	border-radius: 0px 15px 15px 0px
+}
+
+.pagination-bar span:not(.active) {
+	display: inline-block;
+	padding: 5px 7.5px;
+	font-size: 16px;
+}
